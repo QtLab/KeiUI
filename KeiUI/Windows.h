@@ -1,23 +1,31 @@
-#ifndef _DXWindow_H_
-#define _DXWindow_H_
+#ifndef _Windows_H_
+#define _Windows_H_
 
-#include "DXContext.h"
+#include "DirectX9.h"
 
-class DXWindow : public DXContext{
+class Windows : public DirectX9{
+private:
+	static float refreshLast;
+
 protected:
+	static float refreshTime;
+
 	int x, y;
 	int width, height;
 	string name;
 
 public:
 
-	DXWindow(string name, HINSTANCE hInstance = 0);
-	~DXWindow();
+	Windows(string name, HINSTANCE hInstance = 0);
+	~Windows();
 
 	static void messageBox(HWND hWnd, string content, string title, UINT uType);
 
 	virtual bool main(int width, int height);
+	virtual bool load() = 0;
+	virtual void update() = 0;
 	virtual void render() = 0;
+	virtual void recover() = 0;
 
 	virtual LRESULT events(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 

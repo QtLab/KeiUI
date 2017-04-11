@@ -1,9 +1,9 @@
 #include <Windows.h>
-#include "Sample.h"
+#include "App.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd){
-	Sample sample(L"²âÊÔ´°¿Ú", hInstance);
-	sample.main(800, 600);
+	App app(L"²âÊÔ´°¿Ú", hInstance);
+	app.main(800, 600);
 
 	return 0;
 }

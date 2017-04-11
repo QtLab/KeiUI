@@ -25,42 +25,42 @@
     <Filter Include="源文件\Base\Graphic">
       <UniqueIdentifier>{8183c1e8-d16d-4a04-a2d3-1e1e8bc10b16}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Base\Platform">
+      <UniqueIdentifier>{b3fa14bc-fefe-4267-8ee8-643d2a1c139b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Base\Platform">
+      <UniqueIdentifier>{9ad9b194-5716-494c-8613-9bc7fc73e4d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Sample.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Point.cpp">
-      <Filter>源文件\Base</Filter>
-    </ClCompile>
     <ClCompile Include="Utility.cpp">
       <Filter>源文件\Base</Filter>
     </ClCompile>
-    <ClCompile Include="DXWindow.cpp">
+    <ClCompile Include="DirectX9.cpp">
       <Filter>源文件\Base\Graphic</Filter>
     </ClCompile>
-    <ClCompile Include="DXContext.cpp">
-      <Filter>源文件\Base\Graphic</Filter>
+    <ClCompile Include="Windows.cpp">
+      <Filter>源文件\Base\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="App.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Sample.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Utility.h">
       <Filter>头文件\Base</Filter>
     </ClInclude>
-    <ClInclude Include="Point.h">
-      <Filter>头文件\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="DXWindow.h">
+    <ClInclude Include="DirectX9.h">
       <Filter>头文件\Base\Graphic</Filter>
     </ClInclude>
-    <ClInclude Include="DXContext.h">
-      <Filter>头文件\Base\Graphic</Filter>
+    <ClInclude Include="Windows.h">
+      <Filter>头文件\Base\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="App.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

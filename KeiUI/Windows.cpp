@@ -1,7 +1,9 @@
-#include "DXWindow.h"
-#include <tchar.h>
+#include "Windows.h"
 
-DXWindow::DXWindow(string name, HINSTANCE hInstance) : name(name) {
+float Windows::refreshLast = 0;
+float Windows::refreshTime = 0;
+
+Windows::Windows(string name, HINSTANCE hInstance) : DirectX9(0), name(name) {
 
 	// Register window
 	WNDCLASSEX wndClass = {0};
@@ -20,16 +22,16 @@ DXWindow::DXWindow(string name, HINSTANCE hInstance) : name(name) {
 	RegisterClassEx(&wndClass);
 }
 
-DXWindow::~DXWindow(){
+Windows::~Windows(){
 
 }
 
-bool DXWindow::main(int width, int height){
+bool Windows::main(int width, int height){
 	this->width = width;
 	this->height = height;
 
 	// Create window
-	HWND hWnd = CreateWindowEx(
+	this->hWnd = CreateWindowEx(
 		NULL,
 		(this->name).c_str(), (this->name).c_str(),
 		WS_OVERLAPPED | WS_SYSMENU | WS_MINIMIZEBOX,
@@ -40,20 +42,25 @@ bool DXWindow::main(int width, int height){
 		);
 
 	// Show window
-	if(hWnd){
+	if(this->hWnd){
 
 		this->setWindowCenter();
-		MoveWindow(hWnd, this->x, this->y, this->width, this->height, true);
+		MoveWindow(this->hWnd, this->x, this->y, this->width, this->height, true);
 
-		UpdateWindow(hWnd);
-		ShowWindow(hWnd, SW_SHOW);
+		UpdateWindow(this->hWnd);
+		ShowWindow(this->hWnd, SW_SHOW);
 
 	}else{
 		return false;
 	}
 
-	// Initialize DirectX
-	if(!init(hWnd, this->name, this->width, this->height)){
+	// Initialize Graphic
+	if(!this->init(this->name, this->width, this->height)){
+		return false;
+	}
+
+	if(!this->load()){
+		Windows::messageBox(this->hWnd, L"载入资源失败！", name, MB_ICONSTOP);
 		return false;
 	}
 
@@ -67,14 +74,35 @@ bool DXWindow::main(int width, int height){
 			DispatchMessage(&msg);
 
 		}else{
-			this->render();
+			float refreshNow = (float)timeGetTime();
+			Windows::refreshTime = refreshNow - Windows::refreshLast;
+
+			if(this->device){
+				// action
+				this->update();
+
+				// draw
+				this->device->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0x00000000, 1.0f, 0);
+				this->device->BeginScene();
+
+				this->render();
+
+				this->device->EndScene();
+				this->device->Present(0, 0, 0, 0);
+			}else{
+				Windows::messageBox(this->hWnd, L"图形驱动发生错误！", name, MB_ICONSTOP);
+				PostQuitMessage(0);
+			}
+
+			Windows::refreshLast = refreshNow;
 		}
 	}
 
+	this->recover();
 	return true;
 }
 
-LRESULT DXWindow::events(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam){
+LRESULT Windows::events(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam){
 	switch(message){
 	case WM_CLOSE:
 	case WM_DESTROY:
@@ -88,16 +116,16 @@ LRESULT DXWindow::events(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam){
 	return 0;
 }
 
-LRESULT CALLBACK DXWindow::windowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam){
+LRESULT CALLBACK Windows::windowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam){
 	if(message == WM_CREATE){
 		LPCREATESTRUCT pData = (LPCREATESTRUCT)lParam;
-		DXWindow* pThis = (DXWindow*)pData->lpCreateParams;
+		Windows* pThis = (Windows*)pData->lpCreateParams;
 
 		SetWindowLong(hWnd, GWL_USERDATA, (LONG)pThis);
 		return DefWindowProc(hWnd, message, wParam, lParam);
 
 	}else{
-		DXWindow* pThis = (DXWindow*)GetWindowLong(hWnd, GWL_USERDATA);
+		Windows* pThis = (Windows*)GetWindowLong(hWnd, GWL_USERDATA);
 		
 		if(pThis){
 			return pThis->events(hWnd, message, wParam, lParam);
@@ -107,11 +135,11 @@ LRESULT CALLBACK DXWindow::windowProc(HWND hWnd, UINT message, WPARAM wParam, LP
 	}
 }
 
-void DXWindow::messageBox(HWND hWnd, string content, string title, UINT uType){
+void Windows::messageBox(HWND hWnd, string content, string title, UINT uType){
 	MessageBoxW(hWnd, content.c_str(), title.c_str(), uType);
 }
 
-void DXWindow::setWindowCenter(){
+void Windows::setWindowCenter(){
 	this->x = (GetSystemMetrics(SM_CXSCREEN) / 2) - (this->width / 2);
 	this->y = (GetSystemMetrics(SM_CYSCREEN) / 2) - (this->height / 2);
 }
