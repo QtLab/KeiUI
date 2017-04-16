@@ -2,7 +2,7 @@
 #include <d3dx9.h>
 #include "Windows.h"
 
-DirectX9::DirectX9(HWND hWnd) : hWnd(hWnd), device(0) {
+DirectX9::DirectX9() : hWnd(0), device(0) {
 
 }
 
@@ -10,7 +10,7 @@ DirectX9::~DirectX9(){
 	this->device->Release();
 }
 
-bool DirectX9::init(string name, int width, int height){
+bool DirectX9::init3D(string name, int width, int height){
 
 	// 1.初始化接口
 	IDirect3D9* tmp = nullptr;

@@ -3,7 +3,7 @@
 float Windows::refreshLast = 0;
 float Windows::refreshTime = 0;
 
-Windows::Windows(string name, HINSTANCE hInstance) : DirectX9(0), name(name) {
+Windows::Windows(string name, HINSTANCE hInstance) : name(name){
 
 	// Register window
 	WNDCLASSEX wndClass = {0};
@@ -54,8 +54,13 @@ bool Windows::main(int width, int height){
 		return false;
 	}
 
-	// Initialize Graphic
-	if(!this->init(this->name, this->width, this->height)){
+	// Initialize graphic interface
+	if(!this->init3D(this->name, this->width, this->height)){
+		return false;
+	}
+
+	// Initialize draw interface
+	if(!this->init2D(this->name)){
 		return false;
 	}
 
@@ -81,14 +86,17 @@ bool Windows::main(int width, int height){
 				// action
 				this->update();
 
-				// draw
-				this->device->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0x00000000, 1.0f, 0);
+				// render
+				this->device->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(169, 169, 169), 1.0f, 0);
 				this->device->BeginScene();
 
 				this->render();
 
 				this->device->EndScene();
 				this->device->Present(0, 0, 0, 0);
+
+				// this->draw();
+
 			}else{
 				Windows::messageBox(this->hWnd, L"图形驱动发生错误！", name, MB_ICONSTOP);
 				PostQuitMessage(0);
@@ -108,7 +116,6 @@ LRESULT Windows::events(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam){
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
-
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}

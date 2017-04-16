@@ -5,10 +5,8 @@
 
 class App : public Windows{
 private:
-	ID3DXMesh* object[4];
-	D3DMATERIAL9 matreial[4];
-	D3DLIGHT9 spotLight;
-	D3DXMATRIX worldMatrix[4];
+	IDirect3DVertexBuffer9* buffer;
+	IDirect3DTexture9* texture;
 
 public:
 	App(string name, HINSTANCE hInstance = 0);
@@ -16,6 +14,7 @@ public:
 	virtual bool load();
 	virtual void update();
 	virtual void render();
+	virtual void draw();
 	virtual void recover();
 };
 

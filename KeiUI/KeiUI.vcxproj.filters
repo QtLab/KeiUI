@@ -31,6 +31,18 @@
     <Filter Include="源文件\Base\Platform">
       <UniqueIdentifier>{9ad9b194-5716-494c-8613-9bc7fc73e4d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Base\Graphic\3D">
+      <UniqueIdentifier>{41da01b3-44c9-4a18-bfb9-b04873a1f3d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Base\Graphic\3D">
+      <UniqueIdentifier>{dbc7e816-c7ba-49a9-bf5d-a385e33ceac1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Base\Graphic\2D">
+      <UniqueIdentifier>{dd69a8ae-1867-45de-b81e-8ddd23a5aada}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Base\Graphic\2D">
+      <UniqueIdentifier>{7fdc4136-c36d-42e4-b858-fbf84de9f332}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -39,28 +51,34 @@
     <ClCompile Include="Utility.cpp">
       <Filter>源文件\Base</Filter>
     </ClCompile>
-    <ClCompile Include="DirectX9.cpp">
-      <Filter>源文件\Base\Graphic</Filter>
-    </ClCompile>
     <ClCompile Include="Windows.cpp">
       <Filter>源文件\Base\Platform</Filter>
     </ClCompile>
     <ClCompile Include="App.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="DirectX9.cpp">
+      <Filter>源文件\Base\Graphic\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2D1.cpp">
+      <Filter>源文件\Base\Graphic\2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utility.h">
       <Filter>头文件\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectX9.h">
-      <Filter>头文件\Base\Graphic</Filter>
     </ClInclude>
     <ClInclude Include="Windows.h">
       <Filter>头文件\Base\Platform</Filter>
     </ClInclude>
     <ClInclude Include="App.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX9.h">
+      <Filter>头文件\Base\Graphic\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2D1.h">
+      <Filter>头文件\Base\Graphic\2D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

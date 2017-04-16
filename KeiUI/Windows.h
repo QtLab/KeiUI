@@ -1,9 +1,9 @@
 #ifndef _Windows_H_
 #define _Windows_H_
 
-#include "DirectX9.h"
+#include "Direct2D1.h"
 
-class Windows : public DirectX9{
+class Windows : public Direct2D1{
 private:
 	static float refreshLast;
 
@@ -25,6 +25,7 @@ public:
 	virtual bool load() = 0;
 	virtual void update() = 0;
 	virtual void render() = 0;
+	virtual void draw() = 0;
 	virtual void recover() = 0;
 
 	virtual LRESULT events(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);

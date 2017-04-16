@@ -1,87 +1,48 @@
 #include "App.h"
 
 App::App(string name, HINSTANCE hInstance) : Windows(name, hInstance){
-	for(int i = 0; i < 4; i++){
-		this->object[i] = 0;
-	}
+	this->buffer = nullptr;
+	this->texture = nullptr;
 
 }
 
 bool App::load(){
 
-	// create object
-	D3DXCreateTeapot(this->device, &(this->object[0]), 0);
-	D3DXCreateSphere(this->device, 1.0f, 20, 20, &(this->object[1]), 0);
-	D3DXCreateTorus(this->device, 0.5f, 1.0f, 20, 20, &(this->object[2]), 0);
-	D3DXCreateCylinder(this->device, 0.5f, 0.5f, 2.0f, 20, 20, &(this->object[3]), 0);
-
-	// set matrix
-	D3DXMatrixTranslation(&(this->worldMatrix[0]), 0.0f, 2.0f, 0.0f);
-	D3DXMatrixTranslation(&(this->worldMatrix[1]), 0.0f, -2.0f, 0.0f);
-	D3DXMatrixTranslation(&(this->worldMatrix[2]), -3.0f, 0.0f, 0.0f);
-	D3DXMatrixTranslation(&(this->worldMatrix[3]), 3.0f, 0.0f, 0.0f);
-
-	D3DXMATRIX x;
-	D3DXMatrixRotationX(&x, D3DX_PI * 0.5f);
-	(this->worldMatrix)[3] *= x;
-
-	// matreial
-	this->matreial[0] = this->initMaterial(
-		D3DCOLOR_XRGB(255, 0, 0),
-		D3DCOLOR_XRGB(255, 0, 0),
-		D3DCOLOR_XRGB(255, 0, 0),
-		D3DCOLOR_XRGB(0, 0, 0),
-		20.0f
+	// vertex buffer
+	this->device->CreateVertexBuffer(
+		6 * sizeof(DirectX9::Vertex),
+		D3DUSAGE_WRITEONLY,
+		Vertex::FVF,
+		D3DPOOL_MANAGED,
+		&(this->buffer),
+		0
 	);
 
-	this->matreial[1] = this->initMaterial(
-		D3DCOLOR_XRGB(0, 0, 255),
-		D3DCOLOR_XRGB(0, 0, 255),
-		D3DCOLOR_XRGB(0, 0, 255),
-		D3DCOLOR_XRGB(0, 0, 0),
-		20.0f
-	);
+	Vertex* vertex;
+	this->buffer->Lock(0, 0, (void**)&vertex, 0);
+	
+	vertex[0] = DirectX9::Vertex(-1.0f, -1.0f, 3.0f, 0.0f, 0.0f, -1.0f, 0.0f, 3.0f);
+	vertex[1] = DirectX9::Vertex(-1.0f, 1.0f, 3.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f);
+	vertex[2] = DirectX9::Vertex(1.0f, 1.0f, 3.0f, 0.0f, 0.0f, -1.0f, 3.0f, 0.0f);
 
-	this->matreial[2] = this->initMaterial(
-		D3DCOLOR_XRGB(0, 255, 0),
-		D3DCOLOR_XRGB(0, 255, 0),
-		D3DCOLOR_XRGB(0, 255, 0),
-		D3DCOLOR_XRGB(0, 0, 0),
-		20.0f
-	);
+	vertex[3] = DirectX9::Vertex(-1.0f, -1.0f, 3.0f, 0.0f, 0.0f, -1.0f, 0.0f, 3.0f);
+	vertex[4] = DirectX9::Vertex(1.0f, 1.0f, 3.0f, 0.0f, 0.0f, -1.0f, 3.0f, 0.0f);
+	vertex[5] = DirectX9::Vertex(1.0f, -1.0f, 3.0f, 0.0f, 0.0f, -1.0f, 3.0f, 3.0f);
 
-	this->matreial[3] = this->initMaterial(
-		D3DCOLOR_XRGB(255, 255, 0),
-		D3DCOLOR_XRGB(255, 255, 0),
-		D3DCOLOR_XRGB(255, 255, 0),
-		D3DCOLOR_XRGB(0, 0, 0),
-		20.0f
-	);
+	this->buffer->Unlock();
+
+	// texture
+	D3DXCreateTextureFromFile(this->device, L"Resource/1.png", &(this->texture));
+	this->device->SetTexture(0, this->texture);
+
+	this->device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	this->device->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	this->device->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_POINT);
 
 	// light
-	D3DXCOLOR color = D3DCOLOR_XRGB(255, 255, 255);
-
-	this->spotLight = this->initSpotLight(
-		&(D3DXVECTOR3(0.0f, 0.0f, -5.0f)),
-		&(D3DXVECTOR3(0.0f, 0.0f, 1.0f)),
-		&color
-	);
-
-	this->device->SetLight(0, &(this->spotLight));
-	this->device->LightEnable(0, true);
-
-	this->device->SetRenderState(D3DRS_NORMALIZENORMALS, true);
-	this->device->SetRenderState(D3DRS_SPECULARENABLE, true);
-
-	// camera
-	D3DXVECTOR3 position(0.0f, 0.0f, -5.0f);
-	D3DXVECTOR3 target(0.0f, 0.0f, 0.0f);
-	D3DXVECTOR3 up(0.0f, 1.0f, 0.0f);
-
-	D3DXMATRIX viewMatrix;
-	D3DXMatrixLookAtLH(&viewMatrix, &position, &target, &up);
-	this->device->SetTransform(D3DTS_VIEW, &viewMatrix);
-
+	this->device->SetRenderState(D3DRS_LIGHTING, false);
+	
+	
 	// projection matrix
 	D3DXMATRIX projection;
 	D3DXMatrixPerspectiveFovLH(
@@ -91,45 +52,47 @@ bool App::load(){
 		1.0f,
 		1000.0f
 	);
-	this->device->SetTransform(D3DTS_PROJECTION, &projection);
 
+	this->device->SetTransform(D3DTS_PROJECTION, &projection);
+	
 	return true;
 }
 
 void App::update(){
-
-	if(GetAsyncKeyState(VK_LEFT) & 0x8000f){
-		this->spotLight.Direction.x -= 0.01f;
+	if(GetAsyncKeyState('W') & 0x8000f){
+		this->device->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
+		this->device->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
 	}
 
-	if(GetAsyncKeyState(VK_RIGHT) & 0x8000f){
-		this->spotLight.Direction.x += 0.01f;
+	if(GetAsyncKeyState('B') & 0x8000f){
+		this->device->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_BORDER);
+		this->device->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_BORDER);
+		this->device->SetSamplerState(0, D3DSAMP_BORDERCOLOR, 0x000000ff);
 	}
 
-	if(GetAsyncKeyState(VK_DOWN) & 0x8000f){
-		this->spotLight.Direction.y -= 0.01f;
+	if(GetAsyncKeyState('C') & 0x8000f){
+		this->device->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
+		this->device->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
 	}
 
-	if(GetAsyncKeyState(VK_UP) & 0x8000f){
-		this->spotLight.Direction.y += 0.01f;
+	if(GetAsyncKeyState('M') & 0x8000f){
+		this->device->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_MIRROR);
+		this->device->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_MIRROR);
 	}
-
-	this->device->SetLight(0, &(this->spotLight));
-	this->device->LightEnable(0, true);
-
 }
 
 void App::render(){
-	for(int i = 0; i < 4; i++){
-		this->device->SetMaterial(&(this->matreial[i]));
-		this->device->SetTransform(D3DTS_WORLD, &(this->worldMatrix[i]));
-		this->object[i]->DrawSubset(0);
-	}
+	this->device->SetStreamSource(0, this->buffer, 0, sizeof(DirectX9::Vertex));
+	this->device->SetFVF(DirectX9::Vertex::FVF);
+	this->device->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 2);
+
+}
+
+void App::draw(){
+	this->drawRect(100, 100, 100, 100);
 }
 
 void App::recover(){
-	for(int i = 0; i < 4; i++){
-		Utility::Release<ID3DXMesh*>(this->object[i]);
-	}
-
+	Utility::Release<IDirect3DTexture9*>(this->texture);
+	Utility::Release<IDirect3DVertexBuffer9*>(this->buffer);
 }
