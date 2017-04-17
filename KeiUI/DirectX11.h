@@ -18,12 +18,13 @@ namespace KeiUI{
 		ID3D11DeviceContext* context;
 		IDXGISwapChain* swapChain;
 		ID3D11RenderTargetView* backBufferTarget;
+		ID3D11DepthStencilView* depthBufferTarget;
 
 	public:
 		DirectX11();
 		~DirectX11();
 
-		bool init(string name);
+		bool init(string name, int width, int height);
 
 	protected:
 	

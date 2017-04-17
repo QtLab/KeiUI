@@ -57,7 +57,7 @@ namespace KeiUI{
 		}
 
 		// Initialize graphic
-		if(!this->init(this->name)){
+		if(!this->init(this->name, this->width, this->height)){
 			return false;
 		}
 
@@ -84,22 +84,11 @@ namespace KeiUI{
 					this->update();
 
 					// render
-					//this->device->clear(0, 0, d3dclear_target | d3dclear_zbuffer, d3dcolor_xrgb(169, 169, 169), 1.0f, 0);
-					//this->device->beginscene();
-
-					// 3D
-					float clearColor[4] = {0.0f, 0.0f, 0.25f, 1.0f};
+					float clearColor[4] = {0.8f, 0.8f, 0.8f, 1.0f};
 					this->context->ClearRenderTargetView(this->backBufferTarget, clearColor);
+					this->context->ClearDepthStencilView(this->depthBufferTarget, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
 					this->render();
-					this->swapChain->Present( 0, 0 );
-
-					// 2D
-					//this->sprite->Begin(D3DXSPRITE_SORT_DEPTH_FRONTTOBACK | D3DXSPRITE_ALPHABLEND);
-					//this->draw();
-					//this->sprite->End();
-
-					//this->device->EndScene();
-					//this->device->Present(0, 0, 0, 0);
+					this->swapChain->Present(0, 0);
 
 				}else{
 					Window::messageBox(this->hWnd, L"图形驱动发生错误！", name, MB_ICONSTOP);

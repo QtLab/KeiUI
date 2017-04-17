@@ -35,28 +35,6 @@ namespace KeiUI{
 			}
 		}
 
-		template<class T>
-		struct Vector2{
-			T x, y;
-
-			Vector2(T x, T y) : x(x), y(y){
-
-			}
-
-			Vector2() : Vector2(0, 0){
-
-			}
-
-			void operator =(Vector2 value){
-				this->x = value.x;
-				this->y = value.y;
-			}
-
-			void operator /(Vector2 value){
-				this->x /= value.x;
-				this->y /= value.y;
-			}
-		};
 	};
 
 };
