@@ -79,16 +79,20 @@ namespace KeiUI{
 				float refreshNow = (float)timeGetTime();
 				Window::refreshTime = refreshNow - Window::refreshLast;
 
-				if(this->context){
+				if(this->device){
 					// action
 					this->update();
 
 					// render
-					float clearColor[4] = {0.8f, 0.8f, 0.8f, 1.0f};
-					this->context->ClearRenderTargetView(this->backBufferTarget, clearColor);
-					this->context->ClearDepthStencilView(this->depthBufferTarget, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
+					this->device->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(169, 169, 169), 1.0f, 0);
+					this->device->BeginScene();
+
 					this->render();
-					this->swapChain->Present(0, 0);
+
+					this->device->EndScene();
+					this->device->Present(0, 0, 0, 0);
+
+					// this->draw();
 
 				}else{
 					Window::messageBox(this->hWnd, L"图形驱动发生错误！", name, MB_ICONSTOP);

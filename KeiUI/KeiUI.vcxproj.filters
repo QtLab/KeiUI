@@ -25,6 +25,12 @@
     <Filter Include="源文件\Base\Graphic">
       <UniqueIdentifier>{8183c1e8-d16d-4a04-a2d3-1e1e8bc10b16}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Control">
+      <UniqueIdentifier>{8726be67-98ec-4dfd-8658-a503e934bb3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Control">
+      <UniqueIdentifier>{a7f10e84-d583-4ef3-a96b-627435518eec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -36,11 +42,23 @@
     <ClCompile Include="App.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="DirectX11.cpp">
-      <Filter>源文件\Base\Graphic</Filter>
-    </ClCompile>
     <ClCompile Include="Window.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX9.cpp">
+      <Filter>源文件\Base\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>源文件\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas.cpp">
+      <Filter>源文件\Base\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>源文件\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -53,11 +71,23 @@
     <ClInclude Include="Array.h">
       <Filter>头文件\Base</Filter>
     </ClInclude>
-    <ClInclude Include="DirectX11.h">
-      <Filter>头文件\Base\Graphic</Filter>
-    </ClInclude>
     <ClInclude Include="Window.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX9.h">
+      <Filter>头文件\Base\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>头文件\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas.h">
+      <Filter>头文件\Base\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>头文件\Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

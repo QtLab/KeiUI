@@ -1,11 +1,11 @@
 #ifndef _Windows_H_
 #define _Windows_H_
 
-#include "DirectX11.h"
+#include "DirectX9.h"
 
 namespace KeiUI{
 
-	class Window : public DirectX11 {
+	class Window : public DirectX9 {
 	private:
 		static float refreshLast;
 

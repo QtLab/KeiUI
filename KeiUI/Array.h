@@ -83,4 +83,4 @@ namespace KeiUI{
 
 };
 
-#endif
+#endif _Array_H_

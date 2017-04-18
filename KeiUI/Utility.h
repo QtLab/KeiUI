@@ -1,6 +1,7 @@
 #ifndef _Utility_H_
 #define _Utility_H_
 
+#include <d3dx9.h>
 #include <string>
 
 namespace KeiUI{
@@ -39,4 +40,4 @@ namespace KeiUI{
 
 };
 
-#endif
+#endif _Utility_H_
