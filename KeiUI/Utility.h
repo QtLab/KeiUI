@@ -3,6 +3,7 @@
 
 #include <d3dx9.h>
 #include <string>
+#include <sstream>
 
 namespace KeiUI{
 
@@ -13,6 +14,28 @@ namespace KeiUI{
 	public:
 
 		static string loadText(string fileName);
+
+		//其他类型转字符串函数
+		template<class T>
+		static string toString(const T value){
+			string tmp;
+			std::wstringstream stream;
+			stream << value;
+			stream >> tmp;
+
+			return tmp;
+		}
+
+		//字符串转其他类型函数
+		template<class T>
+		static T stringTo(string value){
+			T tmp;
+			std::wstringstream stream;
+			stream << value;
+			stream >> tmp;
+
+			return tmp;
+		}
 
 		//释放函数
 		template<class T>

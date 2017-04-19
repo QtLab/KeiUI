@@ -1,9 +1,12 @@
 #ifndef _Rectangle_H_
 #define _Rectangle_H_
 
+#include "Utility.h"
+
 namespace KeiUI{
 
 	class Rect{
+		friend Rect operator*(const Rect& left,const float& right);
 		friend Rect operator+(const Rect& left,const Rect& right);
 
 	private:
@@ -25,6 +28,8 @@ namespace KeiUI{
 		void setY(int y);
 		void setWidth(int width);
 		void setHeight(int height);
+
+		string toString();
 
 	};
 

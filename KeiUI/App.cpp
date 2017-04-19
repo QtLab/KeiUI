@@ -16,10 +16,10 @@ namespace KeiUI{
 	bool App::load(){
 
 		// Set parent color
-		this->uiTest->setColor(67, 238, 156);
+		this->uiTest->setColor(Color(67, 238, 156));
 
 		Button* button = new Button(L"btn1", Rect(10, 10, 100, 100));
-		button->setTexture(this->loadTexture(L"Resource/1.png"));
+		button->setTexture(L"Resource/1.png");
 
 		this->uiTest->add(button);
 

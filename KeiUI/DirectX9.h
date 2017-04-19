@@ -2,7 +2,6 @@
 #define _DirectX11_H_
 
 #include "Utility.h"
-#include "Array.h"
 #include "Rect.h"
 
 namespace KeiUI{
@@ -20,32 +19,18 @@ namespace KeiUI{
 			}
 		};
 
-		struct TextureInfo{
-			IDirect3DTexture9* texture;
-			D3DXIMAGE_INFO info;
-
-			TextureInfo(){}
-			TextureInfo(IDirect3DTexture9* texture, D3DXIMAGE_INFO info){
-				this->texture = texture;
-				this->info = info;
-			}
-
-		};
-
 	protected:
 		HWND hWnd;
 		IDirect3DDevice9* device; 
 		D3DPRESENT_PARAMETERS config;
 
 		ID3DXSprite* sprite;
-		Array<string, TextureInfo> textureList;
 
 	public:
 		DirectX9();
 		~DirectX9();
 
 		bool init(string name, int width, int height);
-		IDirect3DTexture9* loadTexture(string source, D3DXIMAGE_INFO* info = nullptr);
 
 	protected:
 		D3DMATERIAL9 initMaterial(D3DXCOLOR ambient, D3DXCOLOR diffuse, D3DXCOLOR specular, D3DXCOLOR emissive, float power);

@@ -1,11 +1,12 @@
 #include "UI.h"
+#include "Window.h"
 
 namespace KeiUI{
 
 	UI::UI(string name, Rect rect) 
-		: name(name), rect(rect), texture(nullptr), controlParent(nullptr), controlList(Array<int, UI*>()) 
+		: name(name), rect(rect), texture(L""), controlParent(nullptr), controlList(Array<int, UI*>()) 
 	{
-		this->color = Color::rgb(255, 255, 255);
+		this->color = Color();
 		this->scale = 1.0f;
 		this->rotation = 1.0f;
 	}
@@ -14,8 +15,6 @@ namespace KeiUI{
 		for(int i = 0; i < this->controlList.size(); i++){
 			Utility::Delete(this->controlList.get(i));
 		}
-
-		Utility::Release(this->texture);
 	}
 
 	void UI::draw(Canvas* canvas){
@@ -57,10 +56,10 @@ namespace KeiUI{
 	}
 
 	Rect UI::getRect(){
-		return this->rect;
+		return this->rect * Window::resolution;
 	}
 
-	D3DCOLOR UI::getColor(){
+	Color UI::getColor(){
 		return this->color;
 	}
 
@@ -72,11 +71,11 @@ namespace KeiUI{
 		return this->rotation;
 	}
 
-	void UI::setColor(int r, int g, int b){
-		this->color = Color::rgb(r, g, b);
+	void UI::setColor(Color color){
+		this->color = color;
 	}
 
-	IDirect3DTexture9* UI::getTexture(){
+	string UI::getTexture(){
 		return this->texture;
 	}
 
@@ -100,7 +99,7 @@ namespace KeiUI{
 		this->rotation = rotation;
 	}
 
-	void UI::setTexture(IDirect3DTexture9* texture){
+	void UI::setTexture(string texture){
 		this->texture = texture;
 	}
 

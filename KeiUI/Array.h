@@ -75,10 +75,17 @@ namespace KeiUI{
 		}
 
 		void remove(){
-			int count = this->nodeList.size();
-			if(count > 0){
-				this->nodeList.remove(count -1);
-			}
+			list<ArrayNode<I, V>>::iterator iter = this->nodeList.end();
+			iter--;
+
+			this->nodeList.erase(iter);
+		}
+
+		V last(){
+			list<ArrayNode<I, V>>::iterator iter = this->nodeList.end();
+			iter--;
+
+			return iter->value;
 		}
 
 	};

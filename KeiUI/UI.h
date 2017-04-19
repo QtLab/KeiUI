@@ -12,9 +12,9 @@ namespace KeiUI{
 	private:
 		string name;
 		Rect rect;
-		D3DCOLOR color;
+		Color color;
 		float scale, rotation;
-		IDirect3DTexture9* texture;
+		string texture;
 
 		UI* controlParent;
 
@@ -32,18 +32,18 @@ namespace KeiUI{
 
 		string getName();
 		Rect getRect();
-		D3DCOLOR getColor();
+		Color getColor();
 		float getScale();
 		float getRotation();
-		IDirect3DTexture9* getTexture();
+		string getTexture();
 		UI* getParent();
 
 		void setName(string name);
 		void setRect(Rect rect);
-		void setColor(int r, int g, int b);
+		void setColor(Color color);
 		void setScale(float scale);
 		void setRotation(float rotation);
-		void setTexture(IDirect3DTexture9* texture);
+		void setTexture(string texture);
 		void setParent(UI* parent);
 	};
 

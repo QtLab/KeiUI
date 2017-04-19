@@ -2,9 +2,10 @@
 #include "Canvas.h"
 
 namespace KeiUI{
+	float Window::resolution = 1.0f;
 
-	float Window::refreshLast = 0;
-	float Window::refreshTime = 0;
+	float Window::refreshLast = 0.0f;
+	float Window::refreshTime = 0.0f;
 
 	Window::Window(string name, HINSTANCE hInstance) : name(name){
 
@@ -62,10 +63,16 @@ namespace KeiUI{
 			return false;
 		}
 
+
+
 		if(!this->load()){
 			Window::messageBox(this->hWnd, L"载入资源失败！", name, MB_ICONSTOP);
 			return false;
 		}
+
+		// Initialize canvas
+		this->changeResolution(Resolution::ExtremelyLow);	// Default is ExtremelyLow
+		Canvas canvas(this->device, this->sprite);
 
 		// Message loop
 		MSG msg = {0};
@@ -93,7 +100,6 @@ namespace KeiUI{
 
 					// 2D
 					this->sprite->Begin(D3DXSPRITE_SORT_DEPTH_FRONTTOBACK | D3DXSPRITE_ALPHABLEND);
-					Canvas canvas(this->device, this->sprite);
 					this->draw(&canvas);
 					this->sprite->End();
 
@@ -147,6 +153,29 @@ namespace KeiUI{
 
 	void Window::messageBox(HWND hWnd, string content, string title, UINT uType){
 		MessageBoxW(hWnd, content.c_str(), title.c_str(), uType);
+	}
+
+	void Window::changeResolution(Resolution resolution){
+		Window::resolution = (1.0f + resolution * 0.25f);
+
+		// 计算窗口大小
+		this->width = (int)(this->width * Window::resolution);
+		this->height = (int)(this->height * Window::resolution);
+
+		// 修改接口配置
+		this->config.BackBufferWidth = this->width;
+		this->config.BackBufferHeight = this->height;
+
+		this->sprite->OnLostDevice();
+		this->device->Reset(&(this->config));
+		this->sprite->OnResetDevice();
+
+		// 更改窗口大小
+		this->setWindowCenter();
+		SetWindowPos(
+			this->hWnd, nullptr, this->x, this->y,
+			this->width, this->height, SWP_NOZORDER | SWP_SHOWWINDOW
+		);
 	}
 
 	void Window::setWindowCenter(){

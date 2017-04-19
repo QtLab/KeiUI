@@ -3,7 +3,7 @@
 
 namespace KeiUI{
 
-	DirectX9::DirectX9() : hWnd(nullptr), device(nullptr), sprite(nullptr), textureList(Array<string, TextureInfo>()){
+	DirectX9::DirectX9() : hWnd(nullptr), device(nullptr), sprite(nullptr){
 
 	}
 
@@ -71,87 +71,6 @@ namespace KeiUI{
 		}
 
 		return true;
-	}
-
-	IDirect3DTexture9* DirectX9::loadTexture(string source, D3DXIMAGE_INFO* info){
-
-		if(!(this->textureList.exist(source))){
-			// 打开文件
-			HANDLE file = CreateFile(
-				source.c_str(), GENERIC_READ, 0, NULL,
-				OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL
-				);
-
-			if (file == INVALID_HANDLE_VALUE){
-				return nullptr;
-			}
-
-			// 获取文件的大小
-			DWORD imageSize = GetFileSize(file, nullptr);
-			BYTE* imageBuff = new BYTE[imageSize];
-			if (!imageBuff) {
-				CloseHandle(file);
-				return nullptr;
-			}
-
-			// 读入文件数据
-			DWORD buffSize;
-			ReadFile(file, imageBuff, imageSize, &buffSize, nullptr);
-			CloseHandle(file);
-
-			// 数据解密
-
-			// 获取图片的大小
-			D3DXIMAGE_INFO* tmpInfo = nullptr;
-			if(info != nullptr){
-				tmpInfo = info;
-			}else{
-				tmpInfo = new D3DXIMAGE_INFO();
-			}
-
-			if (FAILED(D3DXGetImageInfoFromFileInMemory(imageBuff, buffSize, tmpInfo))) {
-				Utility::Delete(imageBuff);
-				return nullptr;
-			}
-
-			// 读入内存中的图片
-			IDirect3DTexture9* tmp = nullptr;
-
-			HRESULT hr = D3DXCreateTextureFromFileInMemoryEx(
-				this->device, imageBuff, buffSize, tmpInfo->Width, tmpInfo->Height,
-				D3DX_FROM_FILE, D3DPOOL_DEFAULT, D3DFMT_FROM_FILE, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT,
-				D3DCOLOR_COLORVALUE(0.0f, 0.0f, 0.0f, 0.0f), nullptr, nullptr, &tmp
-				);
-
-			if(FAILED(hr)){
-				Utility::Delete(imageBuff);
-				return nullptr;
-			}
-
-			// 如果需要返回则填充内容
-			if(info != nullptr){
-				*info = *tmpInfo;
-			}
-
-			// 记录资源
-			this->textureList.add(source, TextureInfo(tmp, *tmpInfo));
-
-			// 释放资源
-			tmpInfo = nullptr;
-			delete tmpInfo;
-			Utility::Delete(imageBuff);
-
-			return tmp;
-
-		}else{
-			TextureInfo tmp = this->textureList.get(source);
-
-			if(info != nullptr){
-				*info = tmp.info;
-			}
-
-			return tmp.texture;
-		}
 	}
 
 	D3DMATERIAL9 DirectX9::initMaterial(D3DXCOLOR ambient, D3DXCOLOR diffuse, D3DXCOLOR specular, D3DXCOLOR emissive, float power){

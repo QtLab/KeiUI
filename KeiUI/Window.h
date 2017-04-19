@@ -7,6 +7,13 @@
 namespace KeiUI{
 
 	class Window : public DirectX9 {
+	public:
+		static float resolution;
+
+		enum Resolution{	// ·Ö±æÂÊ
+			ExtremelyLow, Low, Middle, High, ExtremelyHigh
+		};
+
 	private:
 		static float refreshLast;
 
@@ -35,6 +42,7 @@ namespace KeiUI{
 
 	protected:
 		static LRESULT CALLBACK windowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+		void changeResolution(Resolution resolution);
 
 	private:
 		void setWindowCenter();

@@ -2,6 +2,11 @@
 
 namespace KeiUI{
 
+	Rect operator*(const Rect& left,const float& right){
+		Rect rect(left.getX() * right, left.getY() * right, left.getWidth(), left.getHeight());
+		return rect;
+	}
+
 	Rect operator+(const Rect& left,const Rect& right){
 		int x = left.getX() + right.getX();
 		int y = left.getY() + right.getY();
@@ -19,7 +24,7 @@ namespace KeiUI{
 	}
 
 	Rect::Rect() : x(0), y(0), width(0), height(0){
-
+		// new (this)Rect(0, 0, 0, 0);
 	}
 
 	Rect::~Rect(){
@@ -58,4 +63,19 @@ namespace KeiUI{
 		this->height = height;
 	}
 
+	string Rect::toString(){
+		string tmp = L"X";
+		tmp.append(Utility::toString(this->getX()));
+
+		tmp.append(L"Y");
+		tmp.append(Utility::toString(this->getY()));
+
+		tmp.append(L"WIDTH");
+		tmp.append(Utility::toString(this->getWidth()));
+
+		tmp.append(L"HEIGHT");
+		tmp.append(Utility::toString(this->getHeight()));
+
+		return tmp;
+	}
 };
