@@ -17,7 +17,7 @@ namespace KeiUI{
 		virtual bool load();
 		virtual void update();
 		virtual void render();
-		virtual void draw(const Canvas* canvas);
+		virtual void draw(Canvas* canvas);
 		virtual void recover();
 	};
 

@@ -28,7 +28,7 @@ namespace KeiUI{
 		virtual bool load() = 0;
 		virtual void update() = 0;
 		virtual void render() = 0;
-		virtual void draw(const Canvas* canvas) = 0;
+		virtual void draw(Canvas* canvas) = 0;
 		virtual void recover() = 0;
 
 		virtual LRESULT events(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);

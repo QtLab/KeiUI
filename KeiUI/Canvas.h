@@ -11,15 +11,17 @@ namespace KeiUI{
 	protected:
 		IDirect3DDevice9* device;
 		ID3DXSprite* sprite;
+		
+		IDirect3DTexture9* tmpTexture;
 
 	public:
 		Canvas(IDirect3DDevice9* device, ID3DXSprite* sprite);
 		~Canvas();
 
-		void drawRect(Rect rect, float depth, IDirect3DTexture9* texture, D3DCOLOR color = Color::rgb(255, 255, 255), float scale = 1.0f, float rotation = 0.0f) const;
+		void drawRect(Rect rect, float depth, IDirect3DTexture9* texture, D3DCOLOR color = Color::rgb(255, 255, 255), float scale = 1.0f, float rotation = 0.0f);
 
 	private:
-		IDirect3DTexture9* nullTexture(int width, int height) const;
+		IDirect3DTexture9* nullTexture(int width, int height);
 	};
 
 };

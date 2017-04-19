@@ -1,15 +1,17 @@
 #include "Canvas.h"
 
 namespace KeiUI{
-	Canvas::Canvas(IDirect3DDevice9* device, ID3DXSprite* sprite) : device(device), sprite(sprite){
+	Canvas::Canvas(IDirect3DDevice9* device, ID3DXSprite* sprite)
+		: device(device), sprite(sprite), tmpTexture(nullptr) 
+	{
 
 	}
 
 	Canvas::~Canvas(){
-
+		Utility::Release(this->tmpTexture);
 	}
 
-	void Canvas::drawRect(Rect rect, float depth, IDirect3DTexture9* texture, D3DCOLOR color, float scale, float rotation) const{
+	void Canvas::drawRect(Rect rect, float depth, IDirect3DTexture9* texture, D3DCOLOR color, float scale, float rotation){
 		D3DXMATRIX positionMatrix, scaleMatrix, rotateMatrix, finalMatrix;
 		D3DXMatrixRotationZ(&rotateMatrix, rotation);
 		D3DXMatrixScaling(&scaleMatrix, scale, scale, 0.0f);
@@ -25,14 +27,13 @@ namespace KeiUI{
 		this->sprite->Draw(texture, nullptr, nullptr, nullptr, color);
 	}
 
-	IDirect3DTexture9* Canvas::nullTexture(int width, int height) const{
+	IDirect3DTexture9* Canvas::nullTexture(int width, int height){
 
-		IDirect3DTexture9* nullTexture;
-		D3DXCreateTexture(this->device, width, height, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &nullTexture);
+		D3DXCreateTexture(this->device, width, height, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &(this->tmpTexture));
 
 		D3DLOCKED_RECT lockedRect;
-		nullTexture->LockRect(0, &lockedRect, NULL, 0);
-
+		this->tmpTexture->LockRect(0, &lockedRect, NULL, 0);
+		
 		BYTE* pixels= (BYTE*)lockedRect.pBits;
 		for(int i = 0; i < height; i++){
 			for(int j = 0; j < width; j++){
@@ -43,10 +44,10 @@ namespace KeiUI{
 				pixels[index + 3] = 255;
 			}
 		}
+		
+		this->tmpTexture->UnlockRect(0);
 
-		nullTexture->UnlockRect(0);
-
-		return nullTexture;
+		return this->tmpTexture;
 	}
 
 }

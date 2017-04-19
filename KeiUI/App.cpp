@@ -14,6 +14,7 @@ namespace KeiUI{
 	}
 
 	bool App::load(){
+
 		// Set parent color
 		this->uiTest->setColor(67, 238, 156);
 
@@ -33,7 +34,7 @@ namespace KeiUI{
 
 	}
 
-	void App::draw(const Canvas* canvas){
+	void App::draw(Canvas* canvas){
 		this->uiTest->draw(canvas);
 	}
 

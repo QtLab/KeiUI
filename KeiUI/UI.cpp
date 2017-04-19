@@ -18,7 +18,7 @@ namespace KeiUI{
 		Utility::Release(this->texture);
 	}
 
-	void UI::draw(const Canvas* canvas){
+	void UI::draw(Canvas* canvas){
 		// Draw self
 		Rect parent;
 		if(this->getParent() != nullptr){
@@ -32,6 +32,7 @@ namespace KeiUI{
 		for(int i = 0; i < this->controlList.size(); i++){
 			this->controlList.get(i)->draw(canvas);
 		}
+		
 	}
 
 	void UI::add(UI* children){

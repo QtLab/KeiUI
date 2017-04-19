@@ -17,13 +17,15 @@ namespace KeiUI{
 		IDirect3DTexture9* texture;
 
 		UI* controlParent;
+
+	protected:
 		Array<int, UI*> controlList;
 
 	public:
 		UI(string name, Rect rect);
 		~UI();
 
-		virtual void draw(const Canvas* canvas);
+		virtual void draw(Canvas* canvas);
 
 		void add(UI* children);
 		void remove(string name);
