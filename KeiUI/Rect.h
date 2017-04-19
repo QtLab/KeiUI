@@ -4,18 +4,22 @@
 namespace KeiUI{
 
 	class Rect{
+		friend Rect operator+(const Rect& left,const Rect& right);
+
 	private:
 		int x, y;
 		int width, height;
 
 	public:
 		Rect(int x, int y, int width, int height);
+		Rect(Rect &rect);
+		Rect();
 		~Rect();
 
-		int getX();
-		int getY();
-		int getWidth();
-		int getHeight();
+		int getX() const;
+		int getY() const;
+		int getWidth() const;
+		int getHeight() const;
 
 		void setX(int x);
 		void setY(int y);

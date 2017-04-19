@@ -2,23 +2,25 @@
 #define _App_H_
 
 #include "Window.h"
+#include "UI.h"
 
 namespace KeiUI{
 
 	class App : public Window{
 	private:
-		// Rectangle rectangle;
+		UI* uiTest;
 
 	public:
 		App(string name, HINSTANCE hInstance = 0);
+		~App();
 
 		virtual bool load();
 		virtual void update();
 		virtual void render();
-		virtual void draw();
+		virtual void draw(const Canvas* canvas);
 		virtual void recover();
 	};
 
 };
 
-#endif
+#endif _App_H_

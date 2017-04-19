@@ -32,6 +32,10 @@ namespace KeiUI{
 			this->nodeList.push_back(ArrayNode<I, V>(index, value));
 		}
 
+		int size(){
+			return this->nodeList.size();
+		}
+
 		bool exist(I index){
 			list<ArrayNode<I, V>>::iterator iter;
 			for(iter = this->nodeList.begin(); iter != this->nodeList.end(); iter++){
@@ -59,16 +63,14 @@ namespace KeiUI{
 		}
 
 		void remove(I index){
-			int i = 0;
 
 			list<ArrayNode<I, V>>::iterator iter;
 			for(iter = this->nodeList.begin(); iter != this->nodeList.end(); iter++){
 
 				if(iter->index == index){
-					this->nodeList.remove(i);
+					this->nodeList.erase(iter);
 					return;
 				}
-				i++;
 			}
 		}
 

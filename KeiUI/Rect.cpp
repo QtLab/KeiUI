@@ -2,7 +2,23 @@
 
 namespace KeiUI{
 
+	Rect operator+(const Rect& left,const Rect& right){
+		int x = left.getX() + right.getX();
+		int y = left.getY() + right.getY();
+
+		Rect rect(x, y, right.getWidth(), right.getHeight());
+		return rect;
+	}
+
 	Rect::Rect(int x, int y, int width, int height) : x(x), y(y), width(width), height(height){
+
+	}
+
+	Rect::Rect(Rect &rect) : x(rect.getX()), y(rect.getY()), width(rect.getWidth()), height(rect.getHeight()){
+
+	}
+
+	Rect::Rect() : x(0), y(0), width(0), height(0){
 
 	}
 
@@ -10,19 +26,19 @@ namespace KeiUI{
 
 	}
 
-	int Rect::getX(){
+	int Rect::getX() const{
 		return this->x;
 	}
 
-	int Rect::getY(){
+	int Rect::getY() const{
 		return this->y;
 	}
 
-	int Rect::getWidth(){
+	int Rect::getWidth() const{
 		return this->width;
 	}
 
-	int Rect::getHeight(){
+	int Rect::getHeight() const{
 		return this->height;
 	}
 

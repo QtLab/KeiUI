@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "Canvas.h"
 
 namespace KeiUI{
 
@@ -87,12 +88,17 @@ namespace KeiUI{
 					this->device->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(169, 169, 169), 1.0f, 0);
 					this->device->BeginScene();
 
+					// 3D
 					this->render();
+
+					// 2D
+					this->sprite->Begin(D3DXSPRITE_SORT_DEPTH_FRONTTOBACK | D3DXSPRITE_ALPHABLEND);
+					Canvas canvas(this->device, this->sprite);
+					this->draw(&canvas);
+					this->sprite->End();
 
 					this->device->EndScene();
 					this->device->Present(0, 0, 0, 0);
-
-					// this->draw();
 
 				}else{
 					Window::messageBox(this->hWnd, L"图形驱动发生错误！", name, MB_ICONSTOP);
@@ -139,7 +145,7 @@ namespace KeiUI{
 		}
 	}
 
-	void Window::messageBox(HWND hWnd, KeiUI::string content, KeiUI::string title, UINT uType){
+	void Window::messageBox(HWND hWnd, string content, string title, UINT uType){
 		MessageBoxW(hWnd, content.c_str(), title.c_str(), uType);
 	}
 
