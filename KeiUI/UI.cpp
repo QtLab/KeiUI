@@ -4,7 +4,7 @@
 namespace KeiUI{
 
 	UI::UI(string name, Rect rect) 
-		: name(name), rect(rect), texture(L""), controlParent(nullptr), controlList(Array<int, UI*>()) 
+		: name(name), depth(0), rect(rect), texture(L""), controlParent(nullptr), controlList(Array<int, UI*>()) 
 	{
 		this->color = Color();
 		this->scale = 1.0f;
@@ -18,26 +18,36 @@ namespace KeiUI{
 	}
 
 	void UI::draw(Canvas* canvas){
+
 		// Draw self
-		Rect parent;
-		if(this->getParent() != nullptr){
-			parent = this->getParent()->getRect();
+		Rect rect;
+		if(this->getParent() != nullptr){	// ´æÔÚ¸¸UI
+			Rect parent = this->getParent()->getRect();
+			rect = parent + this->getRect();
+
+		}else{
+			rect = this->getRect();
 		}
 
-		Rect rect(parent + this->getRect());
-		canvas->drawRect(rect, 0.5f, this->getTexture(), this->getColor());
+		float index = 1.0f - this->getDepth() * 0.001f;
+		if(this->getTexture() == L"" && !(this->getColor().empty())){
+			canvas->drawRect(rect, index, this->getColor());
+		}else if(this->getTexture() != L""){
+			canvas->drawRect(rect, index, this->getColor(), this->getTexture());
+		}
 
 		// Draw children
 		for(int i = 0; i < this->controlList.size(); i++){
 			this->controlList.get(i)->draw(canvas);
 		}
-		
 	}
 
 	void UI::add(UI* children){
 		children->setParent(this);
 
 		int index = this->controlList.size();
+		children->setDepth(index);
+
 		this->controlList.add(index, children);
 	}
 
@@ -51,8 +61,13 @@ namespace KeiUI{
 		}
 	}
 
+	// get
 	string UI::getName(){
 		return this->name;
+	}
+
+	int UI::getDepth(){
+		return this->depth;
 	}
 
 	Rect UI::getRect(){
@@ -71,6 +86,7 @@ namespace KeiUI{
 		return this->rotation;
 	}
 
+	// set
 	void UI::setColor(Color color){
 		this->color = color;
 	}
@@ -85,6 +101,10 @@ namespace KeiUI{
 
 	void UI::setName(string name){
 		this->name = name;
+	}
+
+	void UI::setDepth(int depth){
+		this->depth = depth;
 	}
 
 	void UI::setRect(Rect rect){

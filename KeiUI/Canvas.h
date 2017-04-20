@@ -33,7 +33,7 @@ namespace KeiUI{
 		Canvas(IDirect3DDevice9* device, ID3DXSprite* sprite);
 		~Canvas();
 
-		void drawRect(Rect rect, float depth, string texture, Color color = Color(), float scale = 1.0f, float rotation = 0.0f);
+		void drawRect(Rect rect, float depth, Color color = Color(), string texture = L"", float scale = 1.0f, float rotation = 0.0f);
 
 	private:
 		IDirect3DTexture9* nullTexture(string name, int width, int height);

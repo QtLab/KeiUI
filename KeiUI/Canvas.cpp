@@ -17,7 +17,7 @@ namespace KeiUI{
 		this->tmpTexture = nullptr;
 	}
 
-	void Canvas::drawRect(Rect rect, float depth, string texture, Color color, float scale, float rotation){
+	void Canvas::drawRect(Rect rect, float depth, Color color, string texture, float scale, float rotation){
 
 		if(texture != L""){
 			D3DXIMAGE_INFO tmp;
@@ -54,7 +54,7 @@ namespace KeiUI{
 			}else{
 
 				D3DLOCKED_RECT lockedRect;
-				tmp->LockRect(0, &lockedRect, NULL, 0);
+				tmp->LockRect(0, &lockedRect, nullptr, 0);
 
 				BYTE* pixels= (BYTE*)lockedRect.pBits;
 				for(int i = 0; i < height; i++){
@@ -94,7 +94,7 @@ namespace KeiUI{
 			HANDLE file = CreateFile(
 				source.c_str(), GENERIC_READ, 0, NULL,
 				OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL
-				);
+			);
 
 			if (file == INVALID_HANDLE_VALUE){
 				return nullptr;

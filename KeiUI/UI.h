@@ -11,6 +11,7 @@ namespace KeiUI{
 	class UI{
 	private:
 		string name;
+		int depth;
 		Rect rect;
 		Color color;
 		float scale, rotation;
@@ -31,6 +32,7 @@ namespace KeiUI{
 		void remove(string name);
 
 		string getName();
+		int getDepth();
 		Rect getRect();
 		Color getColor();
 		float getScale();
@@ -39,6 +41,7 @@ namespace KeiUI{
 		UI* getParent();
 
 		void setName(string name);
+		void setDepth(int depth);
 		void setRect(Rect rect);
 		void setColor(Color color);
 		void setScale(float scale);

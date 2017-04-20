@@ -16,6 +16,8 @@ namespace KeiUI{
 
 		D3DCOLOR toD3DCOLOR();
 		string toString();
+
+		bool empty();
 	};
 
 };

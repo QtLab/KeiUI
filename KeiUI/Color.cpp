@@ -36,4 +36,12 @@ namespace KeiUI{
 
 		return tmp;
 	}
+
+	bool Color::empty(){
+		if(this->r == 255 && this->g == 255 && this->b == 255 && this->a == 255){
+			return true;
+		}else{
+			return false;
+		}
+	}
 };
