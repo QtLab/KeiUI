@@ -3,8 +3,8 @@
 
 #include "Color.h"
 #include "Canvas.h"
-#include "Array.h"
 #include "Input.h"
+#include "Array.h"
 
 namespace KeiUI{
 
@@ -62,6 +62,9 @@ namespace KeiUI{
 		void setColor(Color color);
 		void setRotation(float rotation);
 		void setParent(UI* parent);
+
+	protected:
+		Rect getParentRect();
 	};
 
 };

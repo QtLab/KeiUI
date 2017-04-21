@@ -19,7 +19,7 @@ namespace KeiUI{
 
 	BYTE* Canvas::getPixel(string name, int* pitch){
 		D3DLOCKED_RECT lockedRect;
-		
+
 		TextureInfo info = this->textureList.get(name);
 		this->tmpTexture = info.texture;
 

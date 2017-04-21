@@ -23,8 +23,9 @@ namespace KeiUI{
 	}
 
 	void UI::draw(Canvas* canvas){
-
+	
 		// Draw self
+		/*
 		Rect rect;
 		if(this->getParent() != nullptr){	// 存在父UI
 			Rect parent = this->getParent()->getRect();
@@ -33,6 +34,9 @@ namespace KeiUI{
 		}else{
 			rect = this->getRect();
 		}
+		*/
+
+		Rect rect = this->getParentRect();
 
 		float index = 1.0f - this->getDepth() * 0.001f;
 		canvas->drawRect(rect, index, this->getColor());
@@ -160,4 +164,18 @@ namespace KeiUI{
 		this->controlParent = parent;
 	}
 
+	Rect UI::getParentRect(){
+		UI* p = this->getParent();
+		Rect rect = this->getRect();
+
+		while(p != nullptr){
+			Rect tmp = p->getRect();
+			rect = tmp + rect;
+
+			p = p->getParent();
+		}
+
+		Utility::Delete(p);
+		return rect;
+	}
 };

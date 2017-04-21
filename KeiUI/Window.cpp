@@ -7,7 +7,7 @@ namespace KeiUI{
 	float Window::refreshTime = 0.0f;
 
 	Window::Window(string name, HINSTANCE hInstance) : name(name){
-
+		
 		// Register window
 		WNDCLASSEX wndClass = {0};
 		wndClass.cbSize = sizeof(WNDCLASSEX);
@@ -16,10 +16,10 @@ namespace KeiUI{
 		wndClass.cbClsExtra = 0;
 		wndClass.cbWndExtra = 0;
 		wndClass.hInstance = hInstance;
-		wndClass.hIcon = NULL;
+		wndClass.hIcon = nullptr;
 		wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
 		wndClass.hbrBackground = (HBRUSH)GetStockObject(GRAY_BRUSH);
-		wndClass.lpszMenuName = NULL;
+		wndClass.lpszMenuName = nullptr;
 		wndClass.lpszClassName = name.c_str();
 
 		RegisterClassEx(&wndClass);
@@ -34,15 +34,15 @@ namespace KeiUI{
 		// Save size
 		this->rect.setWidth(width);
 		this->rect.setHeight(height);
-
+		
 		// Create window
 		this->hWnd = CreateWindowEx(
 			NULL,
 			(this->name).c_str(), (this->name).c_str(),
-			WS_OVERLAPPED | WS_SYSMENU | WS_MINIMIZEBOX,
+			WS_SYSMENU | WS_MINIMIZEBOX | WS_POPUP,
 			CW_USEDEFAULT, CW_USEDEFAULT,
 			width, height,
-			NULL, NULL,
+			nullptr, nullptr,
 			0, this
 			);
 
@@ -72,8 +72,9 @@ namespace KeiUI{
 
 		// Initialize module
 		this->changeResolution(Resolution::ExtremelyLow);	// Default is ExtremelyLow
+
 		Canvas canvas(this->device, this->sprite);	// Canvas
-		Input input(this->rect, &canvas);
+		Input input(this->rect, &canvas);	// Input
 
 		// Message loop
 		MSG msg = {0};

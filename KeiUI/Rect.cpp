@@ -21,8 +21,10 @@ namespace KeiUI{
 
 	}
 
-	Rect::Rect(Rect &rect){
-		new (this)Rect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), rect.getTexture(), rect.getScale());
+	Rect::Rect(Rect &rect)
+		: x(rect.getX()), y(rect.getY()), width(rect.getWidth()), height(rect.getHeight()), texture(rect.getTexture()), scale(rect.getScale())
+	{
+
 	}
 
 	Rect::~Rect(){
@@ -91,6 +93,9 @@ namespace KeiUI{
 
 		tmp.append(L"HEIGHT");
 		tmp.append(Utility::toString(this->getHeight()));
+
+		tmp.append(L"TEXTURE");
+		tmp.append(Utility::toString(this->getTexture()));
 
 		tmp.append(L"SCALE");
 		tmp.append(Utility::toString(this->getScale()));

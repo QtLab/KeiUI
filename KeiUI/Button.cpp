@@ -1,4 +1,5 @@
 #include "Button.h"
+#include "Window.h"
 
 namespace KeiUI{
 	Button::Button(string name, Rect rect) : UI(name, rect) {
@@ -10,7 +11,9 @@ namespace KeiUI{
 	}
 
 	void Button::update(Input* input){
-
+		if(input->mouseDown(this->getParentRect())){
+			Window::messageBox(nullptr, L"°²À­ºú°¢¿Ë°Í", L"³ÔÖí", MB_ICONSTOP);
+		}
 	}
 
 	void Button::draw(Canvas* canvas){

@@ -18,7 +18,7 @@ namespace KeiUI{
 		// Set parent color
 		this->uiTest->setColor(Color(67, 238, 156));
 
-		Button* button = new Button(L"btn1", Rect(10, 10, 100, 100));
+		Button* button = new Button(L"btn1", Rect(10, 10, 120, 120));
 		button->setTexture(L"Resource/1.png");
 
 		this->uiTest->add(button);
@@ -27,7 +27,7 @@ namespace KeiUI{
 	}
 
 	void App::update(Input* input){
-
+		this->uiTest->update(input);
 	}
 
 	void App::render(){
