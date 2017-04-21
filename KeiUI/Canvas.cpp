@@ -17,11 +17,30 @@ namespace KeiUI{
 		this->tmpTexture = nullptr;
 	}
 
-	void Canvas::drawRect(Rect rect, float depth, Color color, string texture, float scale, float rotation){
+	BYTE* Canvas::getPixel(string name, int* pitch){
+		D3DLOCKED_RECT lockedRect;
+		
+		TextureInfo info = this->textureList.get(name);
+		this->tmpTexture = info.texture;
 
-		if(texture != L""){
+		if(tmpTexture != nullptr){
+			this->tmpTexture->LockRect(0, &lockedRect, nullptr, 0);
+
+			*pitch = lockedRect.Pitch;
+			BYTE* pixels= (BYTE*)lockedRect.pBits;
+
+			this->tmpTexture->UnlockRect(0);
+			return pixels;
+		}
+
+		return nullptr;
+	}
+
+	void Canvas::drawRect(Rect rect, float depth, Color color, float rotation){
+
+		if(rect.getTexture() != L""){
 			D3DXIMAGE_INFO tmp;
-			this->tmpTexture = this->loadTexture(texture, &tmp);
+			this->tmpTexture = this->loadTexture(rect.getTexture(), &tmp);
 
 		}else{
 			string name = color.toString();
@@ -32,7 +51,7 @@ namespace KeiUI{
 
 		D3DXMATRIX positionMatrix, scaleMatrix, rotateMatrix, finalMatrix;
 		D3DXMatrixRotationZ(&rotateMatrix, rotation);
-		D3DXMatrixScaling(&scaleMatrix, scale * Window::resolution, scale * Window::resolution, 0.0f);
+		D3DXMatrixScaling(&scaleMatrix, rect.getScale(), rect.getScale(), 0.0f);
 		D3DXMatrixTranslation(&positionMatrix, rect.getX(), rect.getY(), depth);
 
 		finalMatrix = scaleMatrix * rotateMatrix * positionMatrix;
@@ -69,7 +88,7 @@ namespace KeiUI{
 
 				tmp->UnlockRect(0);
 
-				// ¼ÇÂ¼×ÊÔ´
+				// è®°å½•èµ„æº
 				D3DXIMAGE_INFO info;
 				info.Width = width;
 				info.Height = height;
@@ -90,7 +109,7 @@ namespace KeiUI{
 	IDirect3DTexture9* Canvas::loadTexture(string source, D3DXIMAGE_INFO* info){
 
 		if(!(this->textureList.exist(source))){
-			// ´ò¿ªÎÄ¼ş
+			// æ‰“å¼€æ–‡ä»¶
 			HANDLE file = CreateFile(
 				source.c_str(), GENERIC_READ, 0, NULL,
 				OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL
@@ -100,7 +119,7 @@ namespace KeiUI{
 				return nullptr;
 			}
 
-			// »ñÈ¡ÎÄ¼şµÄ´óĞ¡
+			// è·å–æ–‡ä»¶çš„å¤§å°
 			DWORD imageSize = GetFileSize(file, nullptr);
 			BYTE* imageBuff = new BYTE[imageSize];
 			if (!imageBuff) {
@@ -108,14 +127,14 @@ namespace KeiUI{
 				return nullptr;
 			}
 
-			// ¶ÁÈëÎÄ¼şÊı¾İ
+			// è¯»å…¥æ–‡ä»¶æ•°æ®
 			DWORD buffSize;
 			ReadFile(file, imageBuff, imageSize, &buffSize, nullptr);
 			CloseHandle(file);
 
-			// Êı¾İ½âÃÜ
+			// æ•°æ®è§£å¯†
 
-			// »ñÈ¡Í¼Æ¬µÄ´óĞ¡
+			// è·å–å›¾ç‰‡çš„å¤§å°
 			D3DXIMAGE_INFO* tmpInfo = nullptr;
 			if(info != nullptr){
 				tmpInfo = info;
@@ -128,7 +147,7 @@ namespace KeiUI{
 				return nullptr;
 			}
 
-			// ¶ÁÈëÄÚ´æÖĞµÄÍ¼Æ¬
+			// è¯»å…¥å†…å­˜ä¸­çš„å›¾ç‰‡
 			IDirect3DTexture9* tmp = nullptr;
 
 			HRESULT hr = D3DXCreateTextureFromFileInMemoryEx(
@@ -142,15 +161,15 @@ namespace KeiUI{
 				return nullptr;
 			}
 
-			// Èç¹ûĞèÒª·µ»ØÔòÌî³äÄÚÈİ
+			// å¦‚æœéœ€è¦è¿”å›åˆ™å¡«å……å†…å®¹
 			if(info != nullptr){
 				*info = *tmpInfo;
 			}
 
-			// ¼ÇÂ¼×ÊÔ´
+			// è®°å½•èµ„æº
 			this->textureList.add(source, TextureInfo(tmp, *tmpInfo));
 
-			// ÊÍ·Å×ÊÔ´
+			// é‡Šæ”¾èµ„æº
 			tmpInfo = nullptr;
 			delete tmpInfo;
 			Utility::Delete(imageBuff);

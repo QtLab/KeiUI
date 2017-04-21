@@ -3,6 +3,7 @@
 
 #include "DirectX9.h"
 #include "Canvas.h"
+#include "Input.h"
 
 namespace KeiUI{
 
@@ -10,7 +11,7 @@ namespace KeiUI{
 	public:
 		static float resolution;
 
-		enum Resolution{	// ·Ö±æÂÊ
+		enum Resolution{	// åˆ†è¾¨çŽ‡
 			ExtremelyLow, Low, Middle, High, ExtremelyHigh
 		};
 
@@ -20,8 +21,7 @@ namespace KeiUI{
 	protected:
 		static float refreshTime;
 
-		int x, y;
-		int width, height;
+		Rect rect;
 		string name;
 
 	public:
@@ -33,7 +33,7 @@ namespace KeiUI{
 
 		virtual bool main(int width, int height);
 		virtual bool load() = 0;
-		virtual void update() = 0;
+		virtual void update(Input* input) = 0;
 		virtual void render() = 0;
 		virtual void draw(Canvas* canvas) = 0;
 		virtual void recover() = 0;

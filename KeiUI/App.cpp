@@ -26,7 +26,7 @@ namespace KeiUI{
 		return true;
 	}
 
-	void App::update(){
+	void App::update(Input* input){
 
 	}
 

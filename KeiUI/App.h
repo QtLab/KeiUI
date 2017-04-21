@@ -15,7 +15,7 @@ namespace KeiUI{
 		~App();
 
 		virtual bool load();
-		virtual void update();
+		virtual void update(Input* input);
 		virtual void render();
 		virtual void draw(Canvas* canvas);
 		virtual void recover();

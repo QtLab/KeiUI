@@ -11,6 +11,7 @@ namespace KeiUI{
 		Button(string name, Rect rect);
 		~Button();
 
+		virtual void update(Input* input);
 		virtual void draw(Canvas* canvas);
 	};
 

@@ -1,5 +1,4 @@
 #include "Window.h"
-#include "Canvas.h"
 
 namespace KeiUI{
 	float Window::resolution = 1.0f;
@@ -31,8 +30,10 @@ namespace KeiUI{
 	}
 
 	bool Window::main(int width, int height){
-		this->width = width;
-		this->height = height;
+
+		// Save size
+		this->rect.setWidth(width);
+		this->rect.setHeight(height);
 
 		// Create window
 		this->hWnd = CreateWindowEx(
@@ -49,7 +50,7 @@ namespace KeiUI{
 		if(this->hWnd){
 
 			this->setWindowCenter();
-			MoveWindow(this->hWnd, this->x, this->y, this->width, this->height, true);
+			MoveWindow(this->hWnd, this->rect.getX(), this->rect.getY(), this->rect.getWidth(), this->rect.getHeight(), true);
 
 			UpdateWindow(this->hWnd);
 			ShowWindow(this->hWnd, SW_SHOW);
@@ -59,20 +60,20 @@ namespace KeiUI{
 		}
 
 		// Initialize graphic
-		if(!this->init(this->name, this->width, this->height)){
+		if(!this->init(this->name, this->rect)){
 			return false;
 		}
 
-
-
+		// Load the resource
 		if(!this->load()){
-			Window::messageBox(this->hWnd, L"载入资源失败！", name, MB_ICONSTOP);
+			Window::messageBox(this->hWnd, L"Failed to load the resource!", name, MB_ICONSTOP);
 			return false;
 		}
 
-		// Initialize canvas
+		// Initialize module
 		this->changeResolution(Resolution::ExtremelyLow);	// Default is ExtremelyLow
-		Canvas canvas(this->device, this->sprite);
+		Canvas canvas(this->device, this->sprite);	// Canvas
+		Input input(this->rect, &canvas);
 
 		// Message loop
 		MSG msg = {0};
@@ -88,10 +89,11 @@ namespace KeiUI{
 				Window::refreshTime = refreshNow - Window::refreshLast;
 
 				if(this->device){
-					// action
-					this->update();
+					// 1.Action
+					input.setCursorPosition();	// Get the mouse coordinates
+					this->update(&input);
 
-					// render
+					// 2.Render
 					this->device->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(169, 169, 169), 1.0f, 0);
 					this->device->BeginScene();
 
@@ -107,7 +109,7 @@ namespace KeiUI{
 					this->device->Present(0, 0, 0, 0);
 
 				}else{
-					Window::messageBox(this->hWnd, L"图形驱动发生错误！", name, MB_ICONSTOP);
+					Window::messageBox(this->hWnd, L"Graphics driver error!", name, MB_ICONSTOP);
 					PostQuitMessage(0);
 				}
 
@@ -158,29 +160,36 @@ namespace KeiUI{
 	void Window::changeResolution(Resolution resolution){
 		Window::resolution = (1.0f + resolution * 0.25f);
 
-		// 计算窗口大小
-		this->width = (int)(this->width * Window::resolution);
-		this->height = (int)(this->height * Window::resolution);
+		// Calculate the window size
+		int width = (int)(this->rect.getWidth() * Window::resolution);
+		int height = (int)(this->rect.getHeight() * Window::resolution);
 
-		// 修改接口配置
-		this->config.BackBufferWidth = this->width;
-		this->config.BackBufferHeight = this->height;
+		this->rect.setWidth(width);
+		this->rect.setHeight(height);
+
+		// Modify the interface configuration
+		this->config.BackBufferWidth = this->rect.getWidth();
+		this->config.BackBufferHeight = this->rect.getHeight();
 
 		this->sprite->OnLostDevice();
 		this->device->Reset(&(this->config));
 		this->sprite->OnResetDevice();
 
-		// 更改窗口大小
+		// Change the window size
 		this->setWindowCenter();
 		SetWindowPos(
-			this->hWnd, nullptr, this->x, this->y,
-			this->width, this->height, SWP_NOZORDER | SWP_SHOWWINDOW
+			this->hWnd, nullptr, this->rect.getX(), this->rect.getY(),
+			this->rect.getWidth(), this->rect.getHeight(), SWP_NOZORDER | SWP_SHOWWINDOW
 		);
 	}
 
 	void Window::setWindowCenter(){
-		this->x = (GetSystemMetrics(SM_CXSCREEN) / 2) - (this->width / 2);
-		this->y = (GetSystemMetrics(SM_CYSCREEN) / 2) - (this->height / 2);
+		
+		int x = (GetSystemMetrics(SM_CXSCREEN) / 2) - (this->rect.getWidth() / 2);
+		int y = (GetSystemMetrics(SM_CYSCREEN) / 2) - (this->rect.getHeight() / 2);
+
+		this->rect.setX(x);
+		this->rect.setY(y);
 	}
 
 };

@@ -12,39 +12,39 @@ namespace KeiUI{
 		Utility::Release(this->device);
 	}
 
-	bool DirectX9::init(string name, int width, int height){
+	bool DirectX9::init(string name, Rect rect){
 
-		// 1.³õÊ¼»¯½Ó¿Ú
+		// 1.åˆå§‹åŒ–æŽ¥å£
 		IDirect3D9* tmp = nullptr;
 
 		tmp = Direct3DCreate9(D3D_SDK_VERSION);
 
 		if(!tmp)
 		{
-			Window::messageBox(this->hWnd, L"Í¼ÐÎ½Ó¿Ú³õÊ¼»¯Ê§°Ü£¡", name, MB_ICONSTOP);
+			Window::messageBox(this->hWnd, L"Graphics interface failed to initialize!", name, MB_ICONSTOP);
 			return false;
 		}
 
-		// 2.Ñ¡ÔñÉè±¸
+		// 2.é€‰æ‹©è®¾å¤‡
 		D3DCAPS9 caps;
 		if(FAILED(tmp->GetDeviceCaps(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, &caps))){
-			Window::messageBox(this->hWnd, L"»ñÈ¡äÖÈ¾Éè±¸Ê§°Ü£¡", name, MB_ICONSTOP);
+			Window::messageBox(this->hWnd, L"Get rendering device failed!", name, MB_ICONSTOP);
 			return false;
 		}
 
 		int vp = 0;
 		if(caps.DevCaps & D3DDEVCAPS_HWTRANSFORMANDLIGHT){
-			vp = D3DCREATE_HARDWARE_VERTEXPROCESSING;	// Ê¹ÓÃÓ²¼þ
+			vp = D3DCREATE_HARDWARE_VERTEXPROCESSING;	// ä½¿ç”¨ç¡¬ä»¶
 		}else{
-			vp = D3DCREATE_SOFTWARE_VERTEXPROCESSING;	// Ê¹ÓÃÈí¼þ
+			vp = D3DCREATE_SOFTWARE_VERTEXPROCESSING;	// ä½¿ç”¨è½¯ä»¶
 		}
 
-		// 3.ÅäÖÃ½Ó¿Ú
-		this->config.BackBufferWidth            = width;
-		this->config.BackBufferHeight           = height;
+		// 3.é…ç½®æŽ¥å£
+		this->config.BackBufferWidth            = rect.getWidth();
+		this->config.BackBufferHeight           = rect.getHeight();
 		this->config.BackBufferFormat           = D3DFMT_A8R8G8B8;
 		this->config.BackBufferCount            = 1;
-		this->config.MultiSampleType            = D3DMULTISAMPLE_8_SAMPLES;	// ¿¹¾â³Ý
+		this->config.MultiSampleType            = D3DMULTISAMPLE_8_SAMPLES;	// æŠ—é”¯é½¿
 		this->config.MultiSampleQuality         = 0;
 		this->config.SwapEffect                 = D3DSWAPEFFECT_DISCARD; 
 		this->config.hDeviceWindow              = this->hWnd;
@@ -55,18 +55,18 @@ namespace KeiUI{
 		this->config.FullScreen_RefreshRateInHz = 0;
 		this->config.PresentationInterval       = D3DPRESENT_INTERVAL_DEFAULT;	// D3DPRESENT_INTERVAL_DEFAULT
 
-		// 4.´´½¨½Ó¿Ú
+		// 4.åˆ›å»ºæŽ¥å£
 		if(FAILED(tmp->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, this->hWnd, vp, &(this->config), &(this->device)))){
-			Window::messageBox(this->hWnd, L"Í¼ÐÎÉè±¸³õÊ¼»¯Ê§°Ü£¡", name, MB_ICONSTOP);
+			Window::messageBox(this->hWnd, L"Graphics device failed to initialize!", name, MB_ICONSTOP);
 			return false;
 		}
 
-		// ÊÍ·ÅÅäÖÃÖ¸Õë
+		// é‡Šæ”¾é…ç½®æŒ‡é’ˆ
 		tmp->Release();
 
-		// ³õÊ¼»¯¾«Áé
+		// åˆå§‹åŒ–ç²¾çµ
 		if(FAILED(D3DXCreateSprite(this->device, &(this->sprite)))){
-			Window::messageBox(this->hWnd, L"´´½¨»æÍ¼½Ó¿ÚÊ§°Ü£¡£¡", name, MB_ICONSTOP);
+			Window::messageBox(this->hWnd, L"Creating a drawing interface failed!", name, MB_ICONSTOP);
 			return false;
 		}
 

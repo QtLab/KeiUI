@@ -3,8 +3,8 @@
 
 #include "Color.h"
 #include "Canvas.h"
-#include "Rect.h"
 #include "Array.h"
+#include "Input.h"
 
 namespace KeiUI{
 
@@ -12,10 +12,9 @@ namespace KeiUI{
 	private:
 		string name;
 		int depth;
-		Rect rect;
+		Rect rect;	// Coordinate information
 		Color color;
-		float scale, rotation;
-		string texture;
+		float rotation;
 
 		UI* controlParent;
 
@@ -26,27 +25,42 @@ namespace KeiUI{
 		UI(string name, Rect rect);
 		~UI();
 
+		virtual void update(Input* input);
 		virtual void draw(Canvas* canvas);
 
 		void add(UI* children);
 		void remove(string name);
 
+		// Get
 		string getName();
 		int getDepth();
-		Rect getRect();
-		Color getColor();
-		float getScale();
-		float getRotation();
+
+		Rect getRect();	// Coordinate information
+		int getX();
+		int getY();
+		int getWidth();
+		int getHeight();
 		string getTexture();
+		int getScale();
+
+		Color getColor();
+		float getRotation();
 		UI* getParent();
 
+		// Set
 		void setName(string name);
 		void setDepth(int depth);
-		void setRect(Rect rect);
-		void setColor(Color color);
-		void setScale(float scale);
-		void setRotation(float rotation);
+
+		void setRect(Rect rect);	// Coordinate information
+		void setX(int x);
+		void setY(int y);
+		void setWidth(int width);
+		void setHeight(int height);
 		void setTexture(string texture);
+		void setScale(float scale);
+
+		void setColor(Color color);
+		void setRotation(float rotation);
 		void setParent(UI* parent);
 	};
 

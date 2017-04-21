@@ -77,6 +77,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Canvas.cpp" />
     <ClCompile Include="Color.cpp" />
@@ -90,6 +91,7 @@
   <ItemGroup>
     <ClInclude Include="Array.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Canvas.h" />
     <ClInclude Include="Color.h" />

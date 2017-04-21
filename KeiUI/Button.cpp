@@ -9,6 +9,10 @@ namespace KeiUI{
 
 	}
 
+	void Button::update(Input* input){
+
+	}
+
 	void Button::draw(Canvas* canvas){
 		UI::draw(canvas);
 	}

@@ -15,7 +15,7 @@ namespace KeiUI{
 
 		static string loadText(string fileName);
 
-		//其他类型转字符串函数
+		//鍏朵粬绫诲瀷杞瓧绗︿覆鍑芥暟
 		template<class T>
 		static string toString(const T value){
 			string tmp;
@@ -26,7 +26,7 @@ namespace KeiUI{
 			return tmp;
 		}
 
-		//字符串转其他类型函数
+		//瀛楃涓茶浆鍏朵粬绫诲瀷鍑芥暟
 		template<class T>
 		static T stringTo(string value){
 			T tmp;
@@ -37,7 +37,7 @@ namespace KeiUI{
 			return tmp;
 		}
 
-		//释放函数
+		//閲婃斁鍑芥暟
 		template<class T>
 		static void Release(T tmp)
 		{
@@ -48,7 +48,7 @@ namespace KeiUI{
 			}
 		}
 
-		//删除函数
+		//鍒犻櫎鍑芥暟
 		template<class T>
 		static void Delete(T tmp)
 		{

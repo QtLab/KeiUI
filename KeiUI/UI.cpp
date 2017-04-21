@@ -4,10 +4,9 @@
 namespace KeiUI{
 
 	UI::UI(string name, Rect rect) 
-		: name(name), depth(0), rect(rect), texture(L""), controlParent(nullptr), controlList(Array<int, UI*>()) 
+		: name(name), depth(0), rect(rect), controlParent(nullptr), controlList(Array<int, UI*>()) 
 	{
 		this->color = Color();
-		this->scale = 1.0f;
 		this->rotation = 1.0f;
 	}
 
@@ -17,11 +16,17 @@ namespace KeiUI{
 		}
 	}
 
+	void UI::update(Input* input){
+		for(int i = 0; i < this->controlList.size(); i++){
+			this->controlList.get(i)->update(input);
+		}
+	}
+
 	void UI::draw(Canvas* canvas){
 
 		// Draw self
 		Rect rect;
-		if(this->getParent() != nullptr){	// ´æÔÚ¸¸UI
+		if(this->getParent() != nullptr){	// å­˜åœ¨çˆ¶UI
 			Rect parent = this->getParent()->getRect();
 			rect = parent + this->getRect();
 
@@ -30,11 +35,7 @@ namespace KeiUI{
 		}
 
 		float index = 1.0f - this->getDepth() * 0.001f;
-		if(this->getTexture() == L"" && !(this->getColor().empty())){
-			canvas->drawRect(rect, index, this->getColor());
-		}else if(this->getTexture() != L""){
-			canvas->drawRect(rect, index, this->getColor(), this->getTexture());
-		}
+		canvas->drawRect(rect, index, this->getColor());
 
 		// Draw children
 		for(int i = 0; i < this->controlList.size(); i++){
@@ -70,16 +71,36 @@ namespace KeiUI{
 		return this->depth;
 	}
 
-	Rect UI::getRect(){
+	Rect UI::getRect(){	// Coordinate information
 		return this->rect * Window::resolution;
+	}
+
+	int UI::getX(){
+		return this->getRect().getX();
+	}
+
+	int UI::getY(){
+		return this->getRect().getY();
+	}
+
+	int UI::getWidth(){
+		return this->getRect().getWidth();
+	}
+
+	int UI::getHeight(){
+		return this->getRect().getHeight();
+	}
+
+	string UI::getTexture(){
+		return this->getRect().getTexture();
+	}
+
+	int UI::getScale(){
+		return this->getRect().getScale();
 	}
 
 	Color UI::getColor(){
 		return this->color;
-	}
-
-	float UI::getScale(){
-		return this->scale;
 	}
 
 	float UI::getRotation(){
@@ -89,10 +110,6 @@ namespace KeiUI{
 	// set
 	void UI::setColor(Color color){
 		this->color = color;
-	}
-
-	string UI::getTexture(){
-		return this->texture;
 	}
 
 	UI* UI::getParent(){
@@ -107,20 +124,36 @@ namespace KeiUI{
 		this->depth = depth;
 	}
 
-	void UI::setRect(Rect rect){
+	void UI::setRect(Rect rect){	// Coordinate information
 		this->rect = rect;
 	}
 
+	void UI::setX(int x){
+		this->rect.setX(x);
+	}
+
+	void UI::setY(int y){
+		this->rect.setY(y);
+	}
+
+	void UI::setWidth(int width){
+		this->rect.setWidth(width);
+	}
+
+	void UI::setHeight(int height){
+		this->rect.setHeight(height);
+	}
+	
+	void UI::setTexture(string texture){
+		this->rect.setTexture(texture);
+	}
+
 	void UI::setScale(float scale){
-		this->scale = scale;
+		this->rect.setScale(scale);
 	}
 
 	void UI::setRotation(float rotation){
 		this->rotation = rotation;
-	}
-
-	void UI::setTexture(string texture){
-		this->texture = texture;
 	}
 
 	void UI::setParent(UI* parent){
