@@ -15,6 +15,10 @@ namespace KeiUI{
 		}
 	}
 
+	bool UI::load(){
+		return true;
+	}
+
 	void UI::update(Input* input){
 		for(int i = 0; i < this->controlList.size(); i++){
 			this->controlList.get(i)->update(input);
@@ -25,6 +29,10 @@ namespace KeiUI{
 				this->clickEvent();
 			}
 		}
+	}
+
+	void UI::render(){
+
 	}
 
 	void UI::draw(Canvas* canvas){
@@ -39,6 +47,10 @@ namespace KeiUI{
 		for(int i = 0; i < this->controlList.size(); i++){
 			this->controlList.get(i)->draw(canvas);
 		}
+	}
+
+	void UI::recover(){
+
 	}
 
 	void UI::add(UI* children){

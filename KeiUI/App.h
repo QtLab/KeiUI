@@ -2,13 +2,14 @@
 #define _App_H_
 
 #include "Window.h"
-#include "Scene.h"
+#include "UI.h"
+#include "Scene1.h"
 
 namespace KeiUI{
 
 	class App : public Window{
 	private:
-		Scene scene;
+		UI* panel;
 
 	public:
 		App(string name, HINSTANCE hInstance = 0);

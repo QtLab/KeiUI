@@ -1,21 +1,22 @@
-#ifndef _Panel_H_
-#define _Panel_H_
+#ifndef _Scene1_H_
+#define _Scene1_H_
 
 #include "UI.h"
 #include "Button.h"
 
 namespace KeiUI{
 
-	class Panel : public UI {
+	class Scene1 : public UI {
 	private:
 		Button* button;
 
 	public:
-		Panel(string name, Rect rect);
-		~Panel();
+		Scene1(string name, Rect rect);
+		~Scene1();
 
 		virtual bool load();
 		virtual void update(Input* input);
+		virtual void render();
 		virtual void draw(Canvas* canvas);
 		virtual void recover();
 
@@ -25,4 +26,4 @@ namespace KeiUI{
 
 };
 
-#endif _Panel_H_
+#endif _Scene1_H_

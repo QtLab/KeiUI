@@ -7,6 +7,9 @@
 
 namespace KeiUI{
 
+	class UI;
+	typedef void (UI::*Function)();
+
 	class UI{
 	private:
 		string name;
@@ -17,7 +20,6 @@ namespace KeiUI{
 		UI* controlParent;
 
 		UI* object;
-		typedef void (UI::*Function)();
 		Function function;
 
 	protected:
@@ -27,8 +29,11 @@ namespace KeiUI{
 		UI(string name, Rect rect);
 		~UI();
 
+		virtual bool load();
 		virtual void update(Input* input);
+		virtual void render();
 		virtual void draw(Canvas* canvas);
+		virtual void recover();
 
 		void add(UI* children);
 		void remove(string name);

@@ -7,7 +7,7 @@
 
 namespace KeiUI{
 
-	class Window : public DirectX9 {
+	class Window : public DirectX9{
 	public:
 		static float resolution;
 
