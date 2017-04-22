@@ -1,7 +1,6 @@
 #ifndef _UI_H_
 #define _UI_H_
 
-#include "Color.h"
 #include "Canvas.h"
 #include "Input.h"
 #include "Array.h"
@@ -13,10 +12,13 @@ namespace KeiUI{
 		string name;
 		int depth;
 		Rect rect;	// Coordinate information
-		Color color;
 		float rotation;
 
 		UI* controlParent;
+
+		UI* object;
+		typedef void (UI::*Function)();
+		Function function;
 
 	protected:
 		Array<int, UI*> controlList;
@@ -41,9 +43,9 @@ namespace KeiUI{
 		int getWidth();
 		int getHeight();
 		string getTexture();
+		Color getColor();
 		int getScale();
 
-		Color getColor();
 		float getRotation();
 		UI* getParent();
 
@@ -57,14 +59,18 @@ namespace KeiUI{
 		void setWidth(int width);
 		void setHeight(int height);
 		void setTexture(string texture);
+		void setColor(Color color);
 		void setScale(float scale);
 
-		void setColor(Color color);
 		void setRotation(float rotation);
 		void setParent(UI* parent);
 
+		void setEvent(UI* object, Function function);
+		void clickEvent();
+
 	protected:
 		Rect getParentRect();
+
 	};
 
 };

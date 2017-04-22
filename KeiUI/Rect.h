@@ -2,6 +2,7 @@
 #define _Rectangle_H_
 
 #include "Utility.h"
+#include "Color.h"
 
 namespace KeiUI{
 
@@ -13,10 +14,11 @@ namespace KeiUI{
 		int x, y;
 		int width, height;
 		string texture;
+		Color color;
 		float scale;
 
 	public:
-		Rect(int x = 0, int y = 0, int width = 0, int height = 0, string texture = L"", float scale = 1.0f);
+		Rect(int x = 0, int y = 0, int width = 0, int height = 0, string texture = L"", Color color = Color(), float scale = 1.0f);
 		Rect(Rect &rect);
 		~Rect();
 
@@ -25,6 +27,7 @@ namespace KeiUI{
 		int getWidth() const;
 		int getHeight() const;
 		string getTexture() const;
+		Color getColor() const;
 		float getScale() const;
 
 		void setX(int x);
@@ -32,6 +35,7 @@ namespace KeiUI{
 		void setWidth(int width);
 		void setHeight(int height);
 		void setTexture(string texture);
+		void setColor(Color color);
 		void setScale(float scale);
 
 		string toString();

@@ -1,5 +1,4 @@
 #include "Button.h"
-#include "Window.h"
 
 namespace KeiUI{
 	Button::Button(string name, Rect rect) : UI(name, rect) {
@@ -10,10 +9,11 @@ namespace KeiUI{
 
 	}
 
-	void Button::update(Input* input){
+	void Button::update(Input* input){/*
 		if(input->mouseDown(this->getParentRect())){
-			Window::messageBox(nullptr, L"安拉胡阿克巴", L"吃猪", MB_ICONSTOP);
-		}
+			// Window::messageBox(nullptr, L"安拉胡阿克巴", L"吃猪", MB_ICONSTOP);
+		}*/
+		UI::update(input);
 	}
 
 	void Button::draw(Canvas* canvas){

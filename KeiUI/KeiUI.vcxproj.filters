@@ -37,6 +37,12 @@
     <Filter Include="源文件\Module">
       <UniqueIdentifier>{82389e80-8e66-48e8-9cc3-15ea3cc1253d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Manager">
+      <UniqueIdentifier>{37edee7e-5377-4f52-8aa7-773d571fba18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Manager">
+      <UniqueIdentifier>{54e8bb60-3abf-46d2-9766-2db893be66b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -63,14 +69,20 @@
     <ClCompile Include="Rect.cpp">
       <Filter>源文件\Base</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>源文件\Control</Filter>
-    </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>源文件\Module</Filter>
     </ClCompile>
     <ClCompile Include="Window.cpp">
       <Filter>源文件\Module</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>源文件\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Panel.cpp">
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>源文件\Control</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -98,14 +110,23 @@
     <ClInclude Include="Rect.h">
       <Filter>头文件\Base</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>头文件\Control</Filter>
-    </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>头文件\Module</Filter>
     </ClInclude>
     <ClInclude Include="Window.h">
       <Filter>头文件\Module</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>头文件\Module</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>头文件\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Panel.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>头文件\Control</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

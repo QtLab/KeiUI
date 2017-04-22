@@ -2,11 +2,10 @@
 #include "Window.h"
 
 namespace KeiUI{
-
+	
 	UI::UI(string name, Rect rect) 
-		: name(name), depth(0), rect(rect), controlParent(nullptr), controlList(Array<int, UI*>()) 
+		: name(name), depth(0), rect(rect), controlParent(nullptr), controlList(Array<int, UI*>()), object(nullptr), function(nullptr)
 	{
-		this->color = Color();
 		this->rotation = 1.0f;
 	}
 
@@ -20,26 +19,21 @@ namespace KeiUI{
 		for(int i = 0; i < this->controlList.size(); i++){
 			this->controlList.get(i)->update(input);
 		}
+
+		if(input->mouseDown(this->getParentRect())){
+			if(this->object != nullptr && this->function != nullptr){
+				this->clickEvent();
+			}
+		}
 	}
 
 	void UI::draw(Canvas* canvas){
 	
 		// Draw self
-		/*
-		Rect rect;
-		if(this->getParent() != nullptr){	// 存在父UI
-			Rect parent = this->getParent()->getRect();
-			rect = parent + this->getRect();
-
-		}else{
-			rect = this->getRect();
-		}
-		*/
-
 		Rect rect = this->getParentRect();
 
 		float index = 1.0f - this->getDepth() * 0.001f;
-		canvas->drawRect(rect, index, this->getColor());
+		canvas->drawRect(rect, index);
 
 		// Draw children
 		for(int i = 0; i < this->controlList.size(); i++){
@@ -99,27 +93,23 @@ namespace KeiUI{
 		return this->getRect().getTexture();
 	}
 
-	int UI::getScale(){
-		return this->getRect().getScale();
+	Color UI::getColor(){
+		return this->getRect().getColor();
 	}
 
-	Color UI::getColor(){
-		return this->color;
+	int UI::getScale(){
+		return this->getRect().getScale();
 	}
 
 	float UI::getRotation(){
 		return this->rotation;
 	}
 
-	// set
-	void UI::setColor(Color color){
-		this->color = color;
-	}
-
 	UI* UI::getParent(){
 		return this->controlParent;
 	}
 
+	// set
 	void UI::setName(string name){
 		this->name = name;
 	}
@@ -152,6 +142,10 @@ namespace KeiUI{
 		this->rect.setTexture(texture);
 	}
 
+	void UI::setColor(Color color){
+		this->rect.setColor(color);
+	}
+
 	void UI::setScale(float scale){
 		this->rect.setScale(scale);
 	}
@@ -178,4 +172,14 @@ namespace KeiUI{
 		Utility::Delete(p);
 		return rect;
 	}
+
+	void UI::setEvent(UI* object, Function function){
+		this->object = object;
+		this->function = function;
+	}
+
+	void UI::clickEvent(){
+		(this->object->*(this->function))();
+	}
+
 };

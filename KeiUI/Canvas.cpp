@@ -36,15 +36,14 @@ namespace KeiUI{
 		return nullptr;
 	}
 
-	void Canvas::drawRect(Rect rect, float depth, Color color, float rotation){
+	void Canvas::drawRect(Rect rect, float depth, float rotation){
 
 		if(rect.getTexture() != L""){
 			D3DXIMAGE_INFO tmp;
 			this->tmpTexture = this->loadTexture(rect.getTexture(), &tmp);
 
 		}else{
-			string name = color.toString();
-			name.append(rect.toString());
+			string name = rect.toString();
 
 			this->tmpTexture = this->nullTexture(name, rect.getWidth(), rect.getHeight());
 		}
@@ -57,7 +56,7 @@ namespace KeiUI{
 		finalMatrix = scaleMatrix * rotateMatrix * positionMatrix;
 		this->sprite->SetTransform(&finalMatrix);
 
-		this->sprite->Draw(this->tmpTexture, nullptr, nullptr, nullptr, color.toD3DCOLOR());
+		this->sprite->Draw(this->tmpTexture, nullptr, nullptr, nullptr, rect.getColor().toD3DCOLOR());
 	}
 
 	IDirect3DTexture9* Canvas::nullTexture(string name, int width, int height){

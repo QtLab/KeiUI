@@ -3,7 +3,7 @@
 namespace KeiUI{
 
 	Rect operator*(const Rect& left,const float& right){
-		Rect rect(left.getX() * right, left.getY() * right, left.getWidth(), left.getHeight(), left.getTexture(), left.getScale() * right);
+		Rect rect(left.getX() * right, left.getY() * right, left.getWidth(), left.getHeight(), left.getTexture(), left.getColor(), left.getScale() * right);
 		return rect;
 	}
 
@@ -11,18 +11,18 @@ namespace KeiUI{
 		int x = left.getX() + right.getX();
 		int y = left.getY() + right.getY();
 
-		Rect rect(x, y, right.getWidth(), right.getHeight(), right.getTexture(), right.getScale());
+		Rect rect(x, y, right.getWidth(), right.getHeight(), right.getTexture(), right.getColor(), right.getScale());
 		return rect;
 	}
 
-	Rect::Rect(int x, int y, int width, int height, string texture, float scale) 
-		: x(x), y(y), width(width), height(height), texture(texture), scale(scale)
+	Rect::Rect(int x, int y, int width, int height, string texture, Color color, float scale) 
+		: x(x), y(y), width(width), height(height), texture(texture), color(color), scale(scale)
 	{
 
 	}
 
 	Rect::Rect(Rect &rect)
-		: x(rect.getX()), y(rect.getY()), width(rect.getWidth()), height(rect.getHeight()), texture(rect.getTexture()), scale(rect.getScale())
+		: x(rect.getX()), y(rect.getY()), width(rect.getWidth()), height(rect.getHeight()), texture(rect.getTexture()), color(rect.getColor()), scale(rect.getScale())
 	{
 
 	}
@@ -52,6 +52,10 @@ namespace KeiUI{
 		return this->texture;
 	}
 
+	Color Rect::getColor() const{
+		return this->color;
+	}
+
 	float Rect::getScale() const{
 		return this->scale;
 	}
@@ -77,6 +81,10 @@ namespace KeiUI{
 		this->texture = texture;
 	}
 
+	void Rect::setColor(Color color){
+		this->color = color;
+	}
+
 	void Rect::setScale(float scale){
 		this->scale = scale;
 	}
@@ -96,6 +104,9 @@ namespace KeiUI{
 
 		tmp.append(L"TEXTURE");
 		tmp.append(Utility::toString(this->getTexture()));
+
+		tmp.append(L"COLOR");
+		tmp.append(Utility::toString(this->getColor().toString()));
 
 		tmp.append(L"SCALE");
 		tmp.append(Utility::toString(this->getScale()));

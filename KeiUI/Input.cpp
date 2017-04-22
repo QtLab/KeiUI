@@ -51,7 +51,13 @@ namespace KeiUI{
 		int scaleY = (int)((ui.getHeight() * ui.getY()) / (ui.getHeight() * ui.getScale()));
 
 		int pitch = 0;
-		BYTE* pixels = this->canvas->getPixel(ui.getTexture(), &pitch);
+		BYTE* pixels = nullptr;
+
+		if(this->ui.getTexture() != L""){
+			pixels = this->canvas->getPixel(this->ui.getTexture(), &pitch);
+		}else{
+			pixels = this->canvas->getPixel(this->ui.toString(), &pitch);
+		}
 
 		if(pixels != nullptr){
 			int index = (x - scaleX) * 4 + (y - scaleY) * pitch;
