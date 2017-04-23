@@ -4,11 +4,11 @@
 #include "Canvas.h"
 #include "Input.h"
 #include "Array.h"
+#include "Event.h"
 
 namespace KeiUI{
 
-	class UI;
-	typedef void (UI::*Function)();
+	class Event;
 
 	class UI{
 	private:
@@ -18,9 +18,7 @@ namespace KeiUI{
 		float rotation;
 
 		UI* controlParent;
-
-		UI* object;
-		Function function;
+		Array<int, Event> eventList;	// Event
 
 	protected:
 		Array<int, UI*> controlList;
@@ -70,11 +68,12 @@ namespace KeiUI{
 		void setRotation(float rotation);
 		void setParent(UI* parent);
 
-		void setEvent(UI* object, Function function);
-		void clickEvent();
+		// Event
+		void setEvent(Event event);
 
 	protected:
 		Rect getParentRect();
+		void callEvent(Input* input);
 
 	};
 

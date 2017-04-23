@@ -4,7 +4,7 @@
 namespace KeiUI{
 	
 	UI::UI(string name, Rect rect) 
-		: name(name), depth(0), rect(rect), controlParent(nullptr), controlList(Array<int, UI*>()), object(nullptr), function(nullptr)
+		: name(name), depth(0), rect(rect), controlParent(nullptr), controlList(Array<int, UI*>()), eventList(Array<int, Event>())
 	{
 		this->rotation = 1.0f;
 	}
@@ -24,11 +24,7 @@ namespace KeiUI{
 			this->controlList.get(i)->update(input);
 		}
 
-		if(input->mouseDown(this->getParentRect())){
-			if(this->object != nullptr && this->function != nullptr){
-				this->clickEvent();
-			}
-		}
+		this->callEvent(input);
 	}
 
 	void UI::render(){
@@ -185,13 +181,46 @@ namespace KeiUI{
 		return rect;
 	}
 
-	void UI::setEvent(UI* object, Function function){
-		this->object = object;
-		this->function = function;
+	void UI::setEvent(Event event){
+		int index = this->eventList.size();
+		this->eventList.add(index, event);
 	}
 
-	void UI::clickEvent(){
-		(this->object->*(this->function))();
+	void UI::callEvent(Input* input){
+
+		Rect parentRect = this->getParentRect();
+
+		for(int i = 0; i < this->eventList.size(); i++){
+			Event event = this->eventList.get(i);
+			bool flag = false;
+
+			switch(event.getType()){
+			case Event::MouseLeftClickEvent:
+				if(input->mouseLeftDown(parentRect)){
+					event.callEvent();
+				}
+
+				break;
+
+			case Event::MouseRightClickEvent:
+				if(input->mouseRightDown(parentRect)){
+					event.callEvent();
+				}
+
+				break;
+
+			case Event::MouseLeftDragEvent:
+				if(input->mouseLeftDown(parentRect)){
+					event.callEvent(input);
+				}
+
+				break;
+
+			}
+
+		}
+
+
 	}
 
 };

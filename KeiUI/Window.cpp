@@ -3,6 +3,8 @@
 namespace KeiUI{
 	float Window::resolution = 1.0f;
 
+	bool Window::isMinimize = false;
+
 	float Window::refreshLast = 0.0f;
 	float Window::refreshTime = 0.0f;
 
@@ -48,7 +50,6 @@ namespace KeiUI{
 
 		// Show window
 		if(this->hWnd){
-
 			this->setWindowCenter();
 			MoveWindow(this->hWnd, this->rect.getX(), this->rect.getY(), this->rect.getWidth(), this->rect.getHeight(), true);
 
@@ -64,6 +65,8 @@ namespace KeiUI{
 			return false;
 		}
 
+		this->changeResolution(Resolution::ExtremelyLow);	// Default is ExtremelyLow
+
 		// Load the resource
 		if(!this->load()){
 			Window::messageBox(this->hWnd, L"Failed to load the resource!", name, MB_ICONSTOP);
@@ -71,8 +74,6 @@ namespace KeiUI{
 		}
 
 		// Initialize module
-		this->changeResolution(Resolution::ExtremelyLow);	// Default is ExtremelyLow
-
 		Canvas canvas(this->device, this->sprite);	// Canvas
 		Input input(this->rect, &canvas);	// Input
 
@@ -90,9 +91,12 @@ namespace KeiUI{
 				Window::refreshTime = refreshNow - Window::refreshLast;
 
 				if(this->device){
+
 					// 1.Action
-					input.setCursorPosition();	// Get the mouse coordinates
-					this->update(&input);
+					if(Window::isMinimize != true){
+						input.setCursorPosition();	// Get the mouse coordinates
+						this->update(&input);
+					}
 
 					// 2.Render
 					this->device->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(169, 169, 169), 1.0f, 0);
@@ -128,6 +132,14 @@ namespace KeiUI{
 		case WM_DESTROY:
 			PostQuitMessage(0);
 			break;
+
+		case WM_KILLFOCUS:
+			Window::isMinimize = true;
+			break;
+		case WM_SETFOCUS:
+			Window::isMinimize = false;
+			break;
+
 		default:
 			return DefWindowProc(hWnd, message, wParam, lParam);
 		}

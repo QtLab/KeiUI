@@ -7,9 +7,18 @@ namespace KeiUI{
 
 	}
 
-	bool Input::mouseDown(Rect ui){
+	bool Input::keyDown(int vKey){
+
+		if(GetAsyncKeyState(vKey) & 0x8000){
+			return true;
+		}
+
+		return false;
+	}
+
+	bool Input::mouseLeftDown(Rect ui){
 		// Cache
-		this->ui = ui;	
+		this->ui = ui;
 
 		if(this->isArea()){
 			if(GetAsyncKeyState(VK_LBUTTON)){
@@ -19,6 +28,28 @@ namespace KeiUI{
 
 		return false;
 	}
+
+	bool Input::mouseRightDown(Rect ui){
+		// Cache
+		this->ui = ui;
+
+		if(this->isArea()){
+			if(GetAsyncKeyState(VK_RBUTTON)){
+				return this->pixelDetection();
+			}
+		}
+
+		return false;
+	}
+
+	int Input::getCursorX(){
+		return this->cursor.getX();
+	}
+
+	int Input::getCursorY(){
+		return this->cursor.getY();
+	}
+
 
 	bool Input::isArea(){
 

@@ -10,10 +10,11 @@ namespace KeiUI{
 	class Window : public DirectX9{
 	public:
 		static float resolution;
-
 		enum Resolution{	// 分辨率
 			ExtremelyLow, Low, Middle, High, ExtremelyHigh
 		};
+
+		static bool isMinimize;
 
 	private:
 		static float refreshLast;
