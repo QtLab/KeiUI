@@ -7,21 +7,20 @@
 namespace KeiUI{
 
 	class UI;
-	typedef void (UI::*Function)();
-	typedef void (UI::*Callback)(Input* input);
+	typedef void (UI::*Function)(Input* input);
 
 	class Event{
 	public:
 		enum EventType{
 			MouseLeftClickEvent,
 			MouseRightClickEvent,
-			MouseLeftDragEvent
+			MouseLeftDragEvent,
+			MouseRightDragEvent
 		};
 
 	private:
 		UI* object;
-		Function function;
-		Callback callback;
+		Function callback;
 		EventType type;
 
 	public:
@@ -30,22 +29,12 @@ namespace KeiUI{
 
 		}
 
-		Event(UI* object, Function function, EventType type) : object(object), function(function), type(type){
+		Event(UI* object, Function callback, EventType type) : object(object), callback(callback), type(type){
 
-		}
-
-		Event(UI* object, Callback callback, EventType type) : object(object), callback(callback), type(type){
-
-		}
-
-		void callEvent(){
-			if(this->object != nullptr && this->function != nullptr){
-				(this->object->*(function))();
-			}
 		}
 
 		void callEvent(Input* input){
-			if(this->object != nullptr && this->function != nullptr){
+			if(this->object != nullptr && this->callback != nullptr){
 				(this->object->*(callback))(input);
 			}
 		}

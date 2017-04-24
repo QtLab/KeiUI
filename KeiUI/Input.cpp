@@ -1,15 +1,16 @@
 #include "Input.h"
 #include <Windows.h>
+#include "Window.h"
 
 namespace KeiUI{
 
-	Input::Input(Rect rect, Canvas* canvas) : rect(rect), canvas(canvas){
+	Input::Input(Rect rect, Canvas* canvas) : rect(rect), canvas(canvas), mouseTimeLock(100), isHold(false){
 
 	}
 
 	bool Input::keyDown(int vKey){
 
-		if(GetAsyncKeyState(vKey) & 0x8000){
+		if(this->getState(vKey)){
 			return true;
 		}
 
@@ -20,8 +21,8 @@ namespace KeiUI{
 		// Cache
 		this->ui = ui;
 
-		if(this->isArea()){
-			if(GetAsyncKeyState(VK_LBUTTON)){
+		if(this->inArea()){
+			if(this->getState(VK_LBUTTON)){
 				return this->pixelDetection();
 			}
 		}
@@ -33,8 +34,8 @@ namespace KeiUI{
 		// Cache
 		this->ui = ui;
 
-		if(this->isArea()){
-			if(GetAsyncKeyState(VK_RBUTTON)){
+		if(this->inArea()){
+			if(this->getState(VK_RBUTTON)){
 				return this->pixelDetection();
 			}
 		}
@@ -49,9 +50,25 @@ namespace KeiUI{
 	int Input::getCursorY(){
 		return this->cursor.getY();
 	}
+	
+	int Input::getLastX(){
+		return this->last.getX();
+	}
 
+	int Input::getLastY(){
+		return this->last.getY();
+	}
 
-	bool Input::isArea(){
+	bool Input::getState(int vKey){
+		if(this->mouseTimeLock.isTime(Window::refreshTime)){
+			return (GetAsyncKeyState(vKey) & 0x8000);
+		}else{
+			return false;
+		}
+		
+	}
+
+	bool Input::inArea(){
 
 		float right = ui.getWidth() * ui.getScale();
 		float bottom = ui.getHeight() * ui.getScale();
@@ -119,6 +136,7 @@ namespace KeiUI{
 		bool inHeight = cursorY >= 0 && cursorY <= this->rect.getHeight();
 
 		if(inWidth && inHeight){
+			this->last = this->cursor;
 			this->cursor = Rect(cursorX, cursorY);
 			return true;
 		}

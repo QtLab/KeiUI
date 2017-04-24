@@ -3,6 +3,7 @@
 
 #include "Rect.h"
 #include "Canvas.h"
+#include "TimeLock.h"
 
 namespace KeiUI{
 
@@ -52,6 +53,10 @@ namespace KeiUI{
 		Canvas* canvas;
 		Rect ui;
 		Rect cursor;
+		Rect last;
+
+		TimeLock mouseTimeLock;
+		bool isHold;
 
 	public:
 		Input(Rect rect, Canvas* canvas);
@@ -64,9 +69,13 @@ namespace KeiUI{
 
 		int getCursorX();
 		int getCursorY();
+		int getLastX();
+		int getLastY();
 
 	private:
-		bool isArea();
+		bool getState(int vKey);
+
+		bool inArea();
 		bool pixelDetection();
 	};
 

@@ -79,6 +79,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Scene1.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="TimeLock.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Canvas.cpp" />
     <ClCompile Include="Color.cpp" />
@@ -95,6 +96,7 @@
     <ClInclude Include="Event.h" />
     <ClInclude Include="Scene1.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="TimeLock.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Canvas.h" />
     <ClInclude Include="Color.h" />

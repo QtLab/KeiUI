@@ -13,11 +13,11 @@ namespace KeiUI{
 
 	bool Scene1::load(){
 		this->button->setTexture(L"Resource/1.png");
-		this->button->setEvent(Event((UI*)this, (Callback)(&Scene1::buttonMoveEvent), Event::MouseLeftDragEvent));
-		this->button->setEvent(Event((UI*)this, (Function)(&Scene1::buttonClickEvent), Event::MouseRightClickEvent));
+		this->button->setEvent(Event((UI*)this, (Function)(&Scene1::buttonClickEvent), Event::MouseLeftClickEvent));
 
 		this->add(button);
 
+		this->setEvent(Event((UI*)this, (Function)(&Scene1::panelMoveEvent), Event::MouseLeftDragEvent));
 		this->setEvent(Event((UI*)this, (Function)(&Scene1::panelClickEvent), Event::MouseRightClickEvent));
 
 		return true;
@@ -47,16 +47,21 @@ namespace KeiUI{
 
 	}
 
-	void Scene1::buttonMoveEvent(Input* input){
-		string tmp = Utility::toString(input->getCursorX());
-		Window::messageBox(nullptr, tmp, this->button->getName(), MB_ICONSTOP);
+	void Scene1::panelMoveEvent(Input* input){
+		int x = input->getCursorX() - input->getLastX();
+		int y = input->getCursorY() - input->getLastY();
+
+		this->setX(this->getX() + x);
+		this->setY(this->getY() + y);
+
 	}
 
-	void Scene1::buttonClickEvent(){
+	void Scene1::buttonClickEvent(Input* input){
 		Window::messageBox(nullptr, L"Event Test", this->button->getName(), MB_ICONSTOP);
 	}
 
-	void Scene1::panelClickEvent(){
+	void Scene1::panelClickEvent(Input* input){
 		Window::messageBox(nullptr, L"Event Test", this->getName(), MB_ICONSTOP);
 	}
+
 };

@@ -16,11 +16,12 @@ namespace KeiUI{
 
 		static bool isMinimize;
 
+		static float refreshTime;
+
 	private:
 		static float refreshLast;
 
 	protected:
-		static float refreshTime;
 
 		Rect rect;
 		string name;

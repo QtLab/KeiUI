@@ -21,9 +21,9 @@ namespace KeiUI{
 		virtual void recover();
 
 	private:
-		void buttonMoveEvent(Input* input);
-		void buttonClickEvent();
-		void panelClickEvent();
+		void panelMoveEvent(Input* input);
+		void buttonClickEvent(Input* input);
+		void panelClickEvent(Input* input);
 
 	};
 

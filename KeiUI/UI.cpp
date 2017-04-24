@@ -24,7 +24,7 @@ namespace KeiUI{
 			this->controlList.get(i)->update(input);
 		}
 
-		this->callEvent(input);
+		this->callEvent(input);	// Event
 	}
 
 	void UI::render(){
@@ -192,23 +192,9 @@ namespace KeiUI{
 
 		for(int i = 0; i < this->eventList.size(); i++){
 			Event event = this->eventList.get(i);
-			bool flag = false;
 
 			switch(event.getType()){
 			case Event::MouseLeftClickEvent:
-				if(input->mouseLeftDown(parentRect)){
-					event.callEvent();
-				}
-
-				break;
-
-			case Event::MouseRightClickEvent:
-				if(input->mouseRightDown(parentRect)){
-					event.callEvent();
-				}
-
-				break;
-
 			case Event::MouseLeftDragEvent:
 				if(input->mouseLeftDown(parentRect)){
 					event.callEvent(input);
@@ -216,10 +202,15 @@ namespace KeiUI{
 
 				break;
 
+			case Event::MouseRightClickEvent:
+			case Event::MouseRightDragEvent:
+				if(input->mouseRightDown(parentRect)){
+					event.callEvent(input);
+				}
+
+				break;
 			}
-
 		}
-
 
 	}
 
