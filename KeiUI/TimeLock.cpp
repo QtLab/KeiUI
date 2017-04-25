@@ -13,13 +13,12 @@ namespace KeiUI{
 	bool TimeLock::isTime(float nowTime){
 		this->lastTime += nowTime;
 
-		if (this->lastTime >= this->firstTime)
-		{
+		if (this->lastTime >= this->firstTime){
+
 			this->lastTime -= this->firstTime;
 			return true;
-		}
-		else
-		{
+
+		}else{
 			return false;
 		}
 	}

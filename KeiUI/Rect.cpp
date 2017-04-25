@@ -90,13 +90,7 @@ namespace KeiUI{
 	}
 
 	string Rect::toString(){
-		string tmp = L"X";
-		tmp.append(Utility::toString(this->getX()));
-
-		tmp.append(L"Y");
-		tmp.append(Utility::toString(this->getY()));
-
-		tmp.append(L"WIDTH");
+		string tmp = L"WIDTH";
 		tmp.append(Utility::toString(this->getWidth()));
 
 		tmp.append(L"HEIGHT");

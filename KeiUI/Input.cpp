@@ -4,7 +4,7 @@
 
 namespace KeiUI{
 
-	Input::Input(Rect rect, Canvas* canvas) : rect(rect), canvas(canvas), mouseTimeLock(100), isHold(false){
+	Input::Input(Rect rect, Canvas* canvas) : rect(rect), canvas(canvas), timeLock(10), isHold(false){
 
 	}
 
@@ -60,12 +60,14 @@ namespace KeiUI{
 	}
 
 	bool Input::getState(int vKey){
-		if(this->mouseTimeLock.isTime(Window::refreshTime)){
-			return (GetAsyncKeyState(vKey) & 0x8000);
-		}else{
-			return false;
+
+		if((GetAsyncKeyState(vKey) & 0x8000)){
+			if(this->timeLock.isTime(Window::refreshTime)){
+				return true;
+			}
 		}
-		
+
+		return false;
 	}
 
 	bool Input::inArea(){

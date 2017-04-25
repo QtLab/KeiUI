@@ -55,7 +55,7 @@ namespace KeiUI{
 		Rect cursor;
 		Rect last;
 
-		TimeLock mouseTimeLock;
+		TimeLock timeLock;
 		bool isHold;
 
 	public:

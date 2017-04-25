@@ -15,7 +15,7 @@ namespace KeiUI{
 
 		static string loadText(string fileName);
 
-		//其他类型转字符串函数
+		// Other types are converted to functions of string types
 		template<class T>
 		static string toString(const T value){
 			string tmp;
@@ -26,7 +26,7 @@ namespace KeiUI{
 			return tmp;
 		}
 
-		//字符串转其他类型函数
+		// Convert string types to other types of functions
 		template<class T>
 		static T stringTo(string value){
 			T tmp;
@@ -37,7 +37,7 @@ namespace KeiUI{
 			return tmp;
 		}
 
-		//释放函数
+		// Release the function of the resource
 		template<class T>
 		static void Release(T tmp)
 		{
@@ -48,7 +48,7 @@ namespace KeiUI{
 			}
 		}
 
-		//删除函数
+		// Delete the function of the pointer
 		template<class T>
 		static void Delete(T tmp)
 		{

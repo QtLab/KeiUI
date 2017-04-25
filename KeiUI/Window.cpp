@@ -80,6 +80,8 @@ namespace KeiUI{
 		// Message loop
 		MSG msg = {0};
 
+		Window::refreshLast = (float)timeGetTime();
+
 		while(WM_QUIT != msg.message){
 
 			if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE)){
