@@ -15,6 +15,22 @@ namespace KeiUI{
 		return rect;
 	}
 
+	bool operator!=(const Rect& left,const Rect& right){
+		bool x = left.getX() == right.getX();
+		bool y = left.getY() == right.getY();
+
+		bool width = left.getWidth() == right.getWidth();
+		bool height = left.getHeight() == right.getHeight();
+
+		bool scale = left.getScale() == right.getScale();
+
+		if(x && y && width && height && scale){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 	Rect::Rect(int x, int y, int width, int height, string texture, Color color, float scale) 
 		: x(x), y(y), width(width), height(height), texture(texture), color(color), scale(scale)
 	{

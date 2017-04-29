@@ -67,13 +67,12 @@ namespace KeiUI{
 		void setRotation(float rotation);
 		void setParent(UI* parent);
 
-		// Event
-		void setEvent(Event event);
-		virtual void callEvent(Input* input);
+		void setEvent(Event event);	// Event
 
 	protected:
 		Rect getParentRect();
 
+		void callEvent(Input* input);	// Event
 	};
 
 };

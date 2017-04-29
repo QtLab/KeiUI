@@ -197,6 +197,7 @@ namespace KeiUI{
 			Event event = this->eventList.get(i);
 
 			switch(event.getType()){
+
 			case Event::MouseLeftClickEvent:
 			case Event::MouseLeftDragEvent:
 				if(input->mouseLeftDown()){
@@ -208,6 +209,20 @@ namespace KeiUI{
 			case Event::MouseRightClickEvent:
 			case Event::MouseRightDragEvent:
 				if(input->mouseRightDown()){
+					event.callEvent(input);
+				}
+
+				break;
+
+			case Event::MouseMoveOverEvent:
+				if(input->mouseMoveOver()){
+					event.callEvent(input);
+				}
+
+				break;
+
+			case Event::MouseMoveOutEvent:
+				if(input->mouseMoveOut()){
 					event.callEvent(input);
 				}
 

@@ -4,7 +4,7 @@
 
 namespace KeiUI{
 
-	Input::Input(Rect rect, Canvas* canvas) : rect(rect), canvas(canvas), timeLock(10), isHold(false){
+	Input::Input(Rect rect, Canvas* canvas) : rect(rect), canvas(canvas), timeLock(10){
 
 	}
 
@@ -43,28 +43,51 @@ namespace KeiUI{
 		return false;
 	}
 
-	void Input::setUI(Rect ui){
-		this->ui = ui;	// Need to set the UI data before using
+	bool Input::mouseMoveOver(){
+
+		// Need to set the UI data before using
+
+		if(this->inArea()){
+			if(this->pixelDetection()){
+				return true;
+			}
+		}
+	}
+
+	bool Input::mouseMoveOut(){
+
+		// Need to set the UI data before using
+
+		if(this->leaveArea()){
+			return true;
+		}
+
+		return false;
+	}
+
+	void Input::setUI(Rect rectUI){
+		this->lastUI = this->rectUI;	// Cache
+		this->rectUI = rectUI;	// Need to set the UI data before using
 	}
 
 	bool Input::emptyUI(){
-		return this->ui.empty();
+		return this->rectUI.empty();
 	}
 
 	int Input::getCursorX(){
-		return this->cursor.getX();
+		return this->rectCursor.getX();
 	}
 
 	int Input::getCursorY(){
-		return this->cursor.getY();
+		return this->rectCursor.getY();
 	}
 	
 	int Input::getLastX(){
-		return this->last.getX();
+		return this->lastCursor.getX();
 	}
 
 	int Input::getLastY(){
-		return this->last.getY();
+		return this->lastCursor.getY();
 	}
 
 	bool Input::getState(int vKey){
@@ -80,18 +103,11 @@ namespace KeiUI{
 
 	bool Input::inArea(){
 
-		float right = ui.getWidth() * ui.getScale();
-		float bottom = ui.getHeight() * ui.getScale();
+		float right = rectUI.getWidth() * rectUI.getScale();
+		float bottom = rectUI.getHeight() * rectUI.getScale();
 
-		int x = ui.getX();
-		int y = ui.getY();
-		int width = ui.getX() + right;
-		int height = ui.getY() + bottom;
-		int cX = cursor.getX();
-		int cY = cursor.getY();
-
-		bool existX = ui.getX() <= this->cursor.getX() && this->cursor.getX() <= ui.getX() + right;
-		bool existY = ui.getY() <= this->cursor.getY() && this->cursor.getY() <= ui.getY() + bottom;
+		bool existX = rectUI.getX() <= this->rectCursor.getX() && this->rectCursor.getX() <= rectUI.getX() + right;
+		bool existY = rectUI.getY() <= this->rectCursor.getY() && this->rectCursor.getY() <= rectUI.getY() + bottom;
 
 		if(existX && existY){
 			return true;
@@ -100,21 +116,37 @@ namespace KeiUI{
 		return false;
 	}
 
+	bool Input::leaveArea(){
+
+		float right = rectUI.getWidth() * rectUI.getScale();
+		float bottom = rectUI.getHeight() * rectUI.getScale();
+
+		bool lastX = rectUI.getX() <= this->lastCursor.getX() && this->lastCursor.getX() <= rectUI.getX() + right;
+		bool lastY = rectUI.getY() <= this->lastCursor.getY() && this->lastCursor.getY() <= rectUI.getY() + bottom;
+
+		if(lastX && lastY && !(this->inArea())){
+			return true;
+		}
+
+		return false;
+
+	}
+
 	bool Input::pixelDetection(){
 
-		int x = (int)((ui.getWidth() * this->cursor.getX()) / (ui.getWidth() * ui.getScale()));
-		int y = (int)((ui.getHeight() * this->cursor.getY()) / (ui.getHeight() * ui.getScale()));
+		int x = (int)((rectUI.getWidth() * this->rectCursor.getX()) / (rectUI.getWidth() * rectUI.getScale()));
+		int y = (int)((rectUI.getHeight() * this->rectCursor.getY()) / (rectUI.getHeight() * rectUI.getScale()));
 
-		int scaleX = (int)((ui.getWidth() * ui.getX()) / (ui.getWidth() * ui.getScale()));
-		int scaleY = (int)((ui.getHeight() * ui.getY()) / (ui.getHeight() * ui.getScale()));
+		int scaleX = (int)((rectUI.getWidth() * rectUI.getX()) / (rectUI.getWidth() * rectUI.getScale()));
+		int scaleY = (int)((rectUI.getHeight() * rectUI.getY()) / (rectUI.getHeight() * rectUI.getScale()));
 
 		int pitch = 0;
 		BYTE* pixels = nullptr;
 
-		if(this->ui.getTexture() != L""){
-			pixels = this->canvas->getPixel(this->ui.getTexture(), &pitch);
+		if(this->rectUI.getTexture() != L""){
+			pixels = this->canvas->getPixel(this->rectUI.getTexture(), &pitch);
 		}else{
-			pixels = this->canvas->getPixel(this->ui.toString(), &pitch);
+			pixels = this->canvas->getPixel(this->rectUI.toString(), &pitch);
 		}
 
 		if(pixels != nullptr){
@@ -134,7 +166,7 @@ namespace KeiUI{
 
 	bool Input::setCursorPosition(){
 
-		this->ui = Rect();	// Clear UI data
+		this->rectUI = Rect();	// Clear UI data
 
 		POINT tmp;
 		GetCursorPos(&tmp);	// Get the cursor position
@@ -148,8 +180,8 @@ namespace KeiUI{
 		bool inHeight = cursorY >= 0 && cursorY <= this->rect.getHeight();
 
 		if(inWidth && inHeight){
-			this->last = this->cursor;
-			this->cursor = Rect(cursorX, cursorY);
+			this->lastCursor = this->rectCursor;
+			this->rectCursor = Rect(cursorX, cursorY);
 			return true;
 		}
 

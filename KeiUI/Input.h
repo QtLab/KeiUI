@@ -4,6 +4,7 @@
 #include "Rect.h"
 #include "Canvas.h"
 #include "TimeLock.h"
+#include "Array.h"
 
 namespace KeiUI{
 
@@ -51,12 +52,14 @@ namespace KeiUI{
 	private:
 		Rect rect;
 		Canvas* canvas;
-		Rect ui;
-		Rect cursor;
-		Rect last;
+
+		Rect rectUI;
+		Rect lastUI;
+
+		Rect rectCursor;
+		Rect lastCursor;
 
 		TimeLock timeLock;
-		bool isHold;
 
 	public:
 		Input(Rect rect, Canvas* canvas);
@@ -64,12 +67,12 @@ namespace KeiUI{
 		bool Input::keyDown(int vKey);
 		bool mouseLeftDown();
 		bool mouseRightDown();
+		bool mouseMoveOver();
+		bool mouseMoveOut();
 
-		void setUI(Rect ui);	// Need to set the UI data before using
+		void setUI(Rect rectUI);	// Need to set the UI data before using
 		bool emptyUI();
 		bool setCursorPosition();
-
-		bool inArea();
 
 		int getCursorX();
 		int getCursorY();
@@ -79,6 +82,8 @@ namespace KeiUI{
 	private:
 		bool getState(int vKey);
 
+		bool inArea();
+		bool leaveArea();
 		bool pixelDetection();
 	};
 

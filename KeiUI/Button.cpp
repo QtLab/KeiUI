@@ -2,7 +2,8 @@
 
 namespace KeiUI{
 	Button::Button(string name, Rect rect) : UI(name, rect) {
-
+		this->setEvent(Event((UI*)this, (Function)(&Button::moveOverEvent), Event::MouseMoveOverEvent));
+		this->setEvent(Event((UI*)this, (Function)(&Button::moveOutEvent), Event::MouseMoveOutEvent));
 	}
 
 	Button::~Button(){
@@ -17,18 +18,6 @@ namespace KeiUI{
 		UI::draw(canvas);
 	}
 
-	void Button::callEvent(Input* input){
-
-		if(input->inArea()){
-			this->setDrawType(false);
-			UI::callEvent(input);
-
-		}else{
-			this->setDrawType(true);
-		}
-
-	}
-
 	void Button::setTexture(string defaultTexture, string hoverTexture){
 		this->defaultTexture = defaultTexture;
 		this->hoverTexture = hoverTexture;
@@ -36,11 +25,12 @@ namespace KeiUI{
 		UI::setTexture(this->defaultTexture);
 	}
 
-	void Button::setDrawType(bool defaultType){
-		if(defaultType){
-			UI::setTexture(this->defaultTexture);
-		}else{
-			UI::setTexture(this->hoverTexture);
-		}
+	void Button::moveOverEvent(Input* input){
+		UI::setTexture(this->hoverTexture);
 	}
+
+	void Button::moveOutEvent(Input* input){
+		UI::setTexture(this->defaultTexture);
+	}
+
 }

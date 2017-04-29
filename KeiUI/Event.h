@@ -14,7 +14,9 @@ namespace KeiUI{
 			MouseLeftClickEvent,
 			MouseRightClickEvent,
 			MouseLeftDragEvent,
-			MouseRightDragEvent
+			MouseRightDragEvent,
+			MouseMoveOverEvent,
+			MouseMoveOutEvent
 		};
 
 	private:
