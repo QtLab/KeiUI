@@ -62,10 +62,14 @@ namespace KeiUI{
 		Input(Rect rect, Canvas* canvas);
 
 		bool Input::keyDown(int vKey);
-		bool mouseLeftDown(Rect ui);
-		bool mouseRightDown(Rect ui);
+		bool mouseLeftDown();
+		bool mouseRightDown();
 
+		void setUI(Rect ui);	// Need to set the UI data before using
+		bool emptyUI();
 		bool setCursorPosition();
+
+		bool inArea();
 
 		int getCursorX();
 		int getCursorY();
@@ -75,7 +79,6 @@ namespace KeiUI{
 	private:
 		bool getState(int vKey);
 
-		bool inArea();
 		bool pixelDetection();
 	};
 

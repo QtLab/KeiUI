@@ -12,7 +12,7 @@ namespace KeiUI{
 	}
 
 	bool Scene1::load(){
-		this->button->setTexture(L"Resource/1.png");
+		this->button->setTexture(L"Resource/1.png", L"Resource/2.png");
 		this->button->setEvent(Event((UI*)this, (Function)(&Scene1::buttonClickEvent), Event::MouseLeftClickEvent));
 
 		this->add(button);

@@ -2,7 +2,6 @@
 #define _Event_H_
 
 #include "UI.h"
-#include "Input.h"
 
 namespace KeiUI{
 

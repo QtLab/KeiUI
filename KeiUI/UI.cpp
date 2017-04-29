@@ -20,9 +20,14 @@ namespace KeiUI{
 	}
 
 	void UI::update(Input* input){
+
 		for(int i = 0; i < this->controlList.size(); i++){
 			this->controlList.get(i)->update(input);
 		}
+
+		// Sets the UI data for the current control
+		Rect parentRect = this->getParentRect();
+		input->setUI(parentRect);
 
 		this->callEvent(input);	// Event
 	}
@@ -188,15 +193,13 @@ namespace KeiUI{
 
 	void UI::callEvent(Input* input){
 
-		Rect parentRect = this->getParentRect();
-
 		for(int i = 0; i < this->eventList.size(); i++){
 			Event event = this->eventList.get(i);
 
 			switch(event.getType()){
 			case Event::MouseLeftClickEvent:
 			case Event::MouseLeftDragEvent:
-				if(input->mouseLeftDown(parentRect)){
+				if(input->mouseLeftDown()){
 					event.callEvent(input);
 				}
 
@@ -204,7 +207,7 @@ namespace KeiUI{
 
 			case Event::MouseRightClickEvent:
 			case Event::MouseRightDragEvent:
-				if(input->mouseRightDown(parentRect)){
+				if(input->mouseRightDown()){
 					event.callEvent(input);
 				}
 

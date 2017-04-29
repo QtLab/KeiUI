@@ -18,10 +18,9 @@ namespace KeiUI{
 		float rotation;
 
 		UI* controlParent;
-		Array<int, Event> eventList;	// Event
-
-	protected:
 		Array<int, UI*> controlList;
+
+		Array<int, Event> eventList;	// Event
 
 	public:
 		UI(string name, Rect rect);
@@ -70,10 +69,10 @@ namespace KeiUI{
 
 		// Event
 		void setEvent(Event event);
+		virtual void callEvent(Input* input);
 
 	protected:
 		Rect getParentRect();
-		void callEvent(Input* input);
 
 	};
 

@@ -17,9 +17,9 @@ namespace KeiUI{
 		return false;
 	}
 
-	bool Input::mouseLeftDown(Rect ui){
-		// Cache
-		this->ui = ui;
+	bool Input::mouseLeftDown(){
+
+		// Need to set the UI data before using
 
 		if(this->inArea()){
 			if(this->getState(VK_LBUTTON)){
@@ -30,9 +30,9 @@ namespace KeiUI{
 		return false;
 	}
 
-	bool Input::mouseRightDown(Rect ui){
-		// Cache
-		this->ui = ui;
+	bool Input::mouseRightDown(){
+
+		// Need to set the UI data before using
 
 		if(this->inArea()){
 			if(this->getState(VK_RBUTTON)){
@@ -41,6 +41,14 @@ namespace KeiUI{
 		}
 
 		return false;
+	}
+
+	void Input::setUI(Rect ui){
+		this->ui = ui;	// Need to set the UI data before using
+	}
+
+	bool Input::emptyUI(){
+		return this->ui.empty();
 	}
 
 	int Input::getCursorX(){
@@ -125,6 +133,8 @@ namespace KeiUI{
 	}
 
 	bool Input::setCursorPosition(){
+
+		this->ui = Rect();	// Clear UI data
 
 		POINT tmp;
 		GetCursorPos(&tmp);	// Get the cursor position

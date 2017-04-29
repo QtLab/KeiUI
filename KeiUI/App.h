@@ -2,7 +2,6 @@
 #define _App_H_
 
 #include "Window.h"
-#include "UI.h"
 #include "Scene1.h"
 
 namespace KeiUI{

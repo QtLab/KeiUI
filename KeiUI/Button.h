@@ -6,6 +6,8 @@
 namespace KeiUI{
 
 	class Button : public UI{
+	private:
+		string defaultTexture, hoverTexture;
 
 	public:
 		Button(string name, Rect rect);
@@ -13,6 +15,12 @@ namespace KeiUI{
 
 		virtual void update(Input* input);
 		virtual void draw(Canvas* canvas);
+		virtual void callEvent(Input* input);
+
+		void setTexture(string defaultTexture, string hoverTexture);
+
+	private:
+		void setDrawType(bool defaultType = true);
 	};
 
 };
