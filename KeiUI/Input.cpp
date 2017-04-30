@@ -48,9 +48,7 @@ namespace KeiUI{
 		// Need to set the UI data before using
 
 		if(this->inArea()){
-			if(this->pixelDetection()){
-				return true;
-			}
+			return true;
 		}
 	}
 
@@ -124,7 +122,7 @@ namespace KeiUI{
 		bool lastX = rectUI.getX() <= this->lastCursor.getX() && this->lastCursor.getX() <= rectUI.getX() + right;
 		bool lastY = rectUI.getY() <= this->lastCursor.getY() && this->lastCursor.getY() <= rectUI.getY() + bottom;
 
-		if(lastX && lastY && !(this->inArea())){
+		if(!(this->inArea()) && lastX && lastY){
 			return true;
 		}
 

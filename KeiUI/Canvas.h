@@ -37,8 +37,8 @@ namespace KeiUI{
 		void drawRect(Rect rect, float depth, float rotation = 0.0f);
 
 	private:
-		IDirect3DTexture9* nullTexture(string name, int width, int height);
-		IDirect3DTexture9* loadTexture(string source, D3DXIMAGE_INFO* info = nullptr);
+		void nullTexture(string name, int width, int height);
+		void loadTexture(string source, D3DXIMAGE_INFO* info = nullptr);
 
 	};
 

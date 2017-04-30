@@ -5,7 +5,7 @@
 using std::list;
 
 namespace KeiUI{
-	template<typename I, typename V>
+	template<class I, class V>
 	struct ArrayNode
 	{
 		I index;
@@ -18,7 +18,7 @@ namespace KeiUI{
 		}
 	};
 
-	template<typename I, typename V>
+	template<class I, class V>
 	class Array{
 	private:
 		list<ArrayNode<I, V>> nodeList;
@@ -69,6 +69,18 @@ namespace KeiUI{
 
 				if(iter->index == index){
 					this->nodeList.erase(iter);
+					return;
+				}
+			}
+		}
+
+		void set(I index, V value){
+
+			list<ArrayNode<I, V>>::iterator iter;
+			for(iter = this->nodeList.begin(); iter != this->nodeList.end(); iter++){
+
+				if(iter->index == index){
+					iter->value = value;
 					return;
 				}
 			}

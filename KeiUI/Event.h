@@ -26,7 +26,7 @@ namespace KeiUI{
 
 	public:
 
-		Event(){
+		Event() : object(nullptr), callback(nullptr){
 
 		}
 
@@ -43,6 +43,7 @@ namespace KeiUI{
 		EventType getType(){
 			return this->type;
 		}
+
 	};
 
 };

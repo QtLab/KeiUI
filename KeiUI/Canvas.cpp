@@ -40,12 +40,12 @@ namespace KeiUI{
 
 		if(rect.getTexture() != L""){
 			D3DXIMAGE_INFO tmp;
-			this->tmpTexture = this->loadTexture(rect.getTexture(), &tmp);
+			this->loadTexture(rect.getTexture(), &tmp);
 
 		}else{
 			string name = rect.toString();
 
-			this->tmpTexture = this->nullTexture(name, rect.getWidth(), rect.getHeight());
+			this->nullTexture(name, rect.getWidth(), rect.getHeight());
 		}
 
 		D3DXMATRIX positionMatrix, scaleMatrix, rotateMatrix, finalMatrix;
@@ -59,20 +59,17 @@ namespace KeiUI{
 		this->sprite->Draw(this->tmpTexture, nullptr, nullptr, nullptr, rect.getColor().toD3DCOLOR());
 	}
 
-	IDirect3DTexture9* Canvas::nullTexture(string name, int width, int height){
+	void Canvas::nullTexture(string name, int width, int height){
 
 		if(!(this->textureList.exist(name))){
 
-			IDirect3DTexture9* tmp = nullptr;
-			HRESULT hr = D3DXCreateTexture(this->device, width, height, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &tmp);
+			this->tmpTexture = nullptr;
+			HRESULT hr = D3DXCreateTexture(this->device, width, height, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &(this->tmpTexture));
 
-			if(FAILED(hr)){
-				return nullptr;
-
-			}else{
+			if(SUCCEEDED(hr)){
 
 				D3DLOCKED_RECT lockedRect;
-				tmp->LockRect(0, &lockedRect, nullptr, 0);
+				this->tmpTexture->LockRect(0, &lockedRect, nullptr, 0);
 
 				BYTE* pixels= (BYTE*)lockedRect.pBits;
 				for(int i = 0; i < height; i++){
@@ -85,27 +82,25 @@ namespace KeiUI{
 					}
 				}
 
-				tmp->UnlockRect(0);
+				this->tmpTexture->UnlockRect(0);
 
 				// 记录资源
 				D3DXIMAGE_INFO info;
 				info.Width = width;
 				info.Height = height;
 
-				this->textureList.add(name, TextureInfo(tmp, info));
-
-				return tmp;
+				this->textureList.add(name, TextureInfo(this->tmpTexture, info));
 			}
 
 		}else{
 
 			TextureInfo tmp = this->textureList.get(name);
-			return tmp.texture;
+			this->tmpTexture = tmp.texture;
 		}
 
 	}
 
-	IDirect3DTexture9* Canvas::loadTexture(string source, D3DXIMAGE_INFO* info){
+	void Canvas::loadTexture(string source, D3DXIMAGE_INFO* info){
 
 		if(!(this->textureList.exist(source))){
 			// 打开文件
@@ -115,7 +110,7 @@ namespace KeiUI{
 			);
 
 			if (file == INVALID_HANDLE_VALUE){
-				return nullptr;
+				return;
 			}
 
 			// 获取文件的大小
@@ -123,7 +118,7 @@ namespace KeiUI{
 			BYTE* imageBuff = new BYTE[imageSize];
 			if (!imageBuff) {
 				CloseHandle(file);
-				return nullptr;
+				return;
 			}
 
 			// 读入文件数据
@@ -143,21 +138,21 @@ namespace KeiUI{
 
 			if (FAILED(D3DXGetImageInfoFromFileInMemory(imageBuff, buffSize, tmpInfo))) {
 				Utility::Delete(imageBuff);
-				return nullptr;
+				return;
 			}
 
 			// 读入内存中的图片
-			IDirect3DTexture9* tmp = nullptr;
+			this->tmpTexture = nullptr;
 
 			HRESULT hr = D3DXCreateTextureFromFileInMemoryEx(
 				this->device, imageBuff, buffSize, tmpInfo->Width, tmpInfo->Height,
 				D3DX_FROM_FILE, D3DPOOL_DEFAULT, D3DFMT_FROM_FILE, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT,
-				D3DCOLOR_COLORVALUE(0.0f, 0.0f, 0.0f, 0.0f), nullptr, nullptr, &tmp
-				);
+				D3DCOLOR_COLORVALUE(0.0f, 0.0f, 0.0f, 0.0f), nullptr, nullptr, &(this->tmpTexture)
+			);
 
 			if(FAILED(hr)){
 				Utility::Delete(imageBuff);
-				return nullptr;
+				return;
 			}
 
 			// 如果需要返回则填充内容
@@ -166,14 +161,12 @@ namespace KeiUI{
 			}
 
 			// 记录资源
-			this->textureList.add(source, TextureInfo(tmp, *tmpInfo));
+			this->textureList.add(source, TextureInfo(this->tmpTexture, *tmpInfo));
 
 			// 释放资源
 			tmpInfo = nullptr;
 			delete tmpInfo;
 			Utility::Delete(imageBuff);
-
-			return tmp;
 
 		}else{
 			TextureInfo tmp = this->textureList.get(source);
@@ -182,7 +175,7 @@ namespace KeiUI{
 				*info = tmp.info;
 			}
 
-			return tmp.texture;
+			this->tmpTexture = tmp.texture;
 		}
 	}
 
