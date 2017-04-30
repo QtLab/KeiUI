@@ -2,6 +2,7 @@
 #define _Input_H_
 
 #include "Rect.h"
+#include "Clip.h"
 #include "Canvas.h"
 #include "TimeLock.h"
 #include "Array.h"
@@ -50,19 +51,19 @@ namespace KeiUI{
 		};
 
 	private:
-		Rect rect;
+		Clip rect;
 		Canvas* canvas;
 
 		Rect rectUI;
 		Rect lastUI;
 
-		Rect rectCursor;
-		Rect lastCursor;
+		Clip rectCursor;
+		Clip lastCursor;
 
 		TimeLock timeLock;
 
 	public:
-		Input(Rect rect, Canvas* canvas);
+		Input(Clip rect, Canvas* canvas);
 
 		bool Input::keyDown(int vKey);
 		bool mouseLeftDown();

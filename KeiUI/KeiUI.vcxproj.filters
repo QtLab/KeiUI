@@ -84,6 +84,9 @@
     <ClCompile Include="TimeLock.cpp">
       <Filter>源文件\Module</Filter>
     </ClCompile>
+    <ClCompile Include="Clip.cpp">
+      <Filter>源文件\Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utility.h">
@@ -127,6 +130,9 @@
     </ClInclude>
     <ClInclude Include="TimeLock.h">
       <Filter>头文件\Module</Filter>
+    </ClInclude>
+    <ClInclude Include="Clip.h">
+      <Filter>头文件\Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

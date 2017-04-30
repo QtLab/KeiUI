@@ -32,13 +32,13 @@ namespace KeiUI{
 	}
 
 	Rect::Rect(int x, int y, int width, int height, string texture, Color color, float scale) 
-		: x(x), y(y), width(width), height(height), texture(texture), color(color), scale(scale)
+		: clip(x, y, width, height), texture(texture), color(color), scale(scale)
 	{
 
 	}
 
 	Rect::Rect(Rect &rect)
-		: x(rect.getX()), y(rect.getY()), width(rect.getWidth()), height(rect.getHeight()), texture(rect.getTexture()), color(rect.getColor()), scale(rect.getScale())
+		: clip(rect.getX(), rect.getY(), rect.getWidth(),rect.getHeight()), texture(rect.getTexture()), color(rect.getColor()), scale(rect.getScale())
 	{
 
 	}
@@ -49,19 +49,19 @@ namespace KeiUI{
 
 	// get
 	int Rect::getX() const{
-		return this->x;
+		return this->clip.getX();
 	}
 
 	int Rect::getY() const{
-		return this->y;
+		return this->clip.getY();
 	}
 
 	int Rect::getWidth() const{
-		return this->width;
+		return this->clip.getWidth();
 	}
 
 	int Rect::getHeight() const{
-		return this->height;
+		return this->clip.getHeight();
 	}
 
 	string Rect::getTexture() const{
@@ -78,19 +78,19 @@ namespace KeiUI{
 
 	// set
 	void Rect::setX(int x){
-		this->x = x;
+		this->clip.setX(x);
 	}
 
 	void Rect::setY(int y){
-		this->y = y;
+		this->clip.setY(y);
 	}
 
 	void Rect::setWidth(int width){
-		this->width = width;
+		this->clip.setWidth(width);
 	}
 
 	void Rect::setHeight(int height){
-		this->height = height;
+		this->clip.setHeight(height);
 	}
 
 	void Rect::setTexture(string texture){
@@ -124,11 +124,11 @@ namespace KeiUI{
 		return tmp;
 	}
 
+	Clip Rect::toClip(){
+		return this->clip;
+	}
+
 	bool Rect::empty(){
-		if(this->getX() == 0 && this->getY() == 0 && this->getWidth() == 0 && this->getHeight() == 0){
-			return true;
-		}else{
-			return false;
-		}
+		return this->clip.empty();
 	}
 };

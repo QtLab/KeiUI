@@ -12,7 +12,7 @@ namespace KeiUI{
 		Utility::Release(this->device);
 	}
 
-	bool DirectX9::init(string name, Rect rect){
+	bool DirectX9::init(string name, Clip rect){
 
 		// 1.初始化接口
 		IDirect3D9* tmp = nullptr;

@@ -22,8 +22,7 @@ namespace KeiUI{
 		static float refreshLast;
 
 	protected:
-
-		Rect rect;
+		Clip rect;
 		string name;
 
 	public:

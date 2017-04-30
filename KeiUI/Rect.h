@@ -3,6 +3,7 @@
 
 #include "Utility.h"
 #include "Color.h"
+#include "Clip.h"
 
 namespace KeiUI{
 
@@ -12,8 +13,7 @@ namespace KeiUI{
 		friend bool operator!=(const Rect& left,const Rect& right);
 
 	private:
-		int x, y;
-		int width, height;
+		Clip clip;
 		string texture;
 		Color color;
 		float scale;
@@ -27,6 +27,7 @@ namespace KeiUI{
 		int getY() const;
 		int getWidth() const;
 		int getHeight() const;
+
 		string getTexture() const;
 		Color getColor() const;
 		float getScale() const;
@@ -35,11 +36,13 @@ namespace KeiUI{
 		void setY(int y);
 		void setWidth(int width);
 		void setHeight(int height);
+
 		void setTexture(string texture);
 		void setColor(Color color);
 		void setScale(float scale);
 
 		string toString();
+		Clip toClip();
 
 		bool empty();
 

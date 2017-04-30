@@ -4,7 +4,7 @@
 
 namespace KeiUI{
 
-	Input::Input(Rect rect, Canvas* canvas) : rect(rect), canvas(canvas), timeLock(10){
+	Input::Input(Clip rect, Canvas* canvas) : rect(rect), canvas(canvas), timeLock(10){
 
 	}
 
@@ -179,7 +179,7 @@ namespace KeiUI{
 
 		if(inWidth && inHeight){
 			this->lastCursor = this->rectCursor;
-			this->rectCursor = Rect(cursorX, cursorY);
+			this->rectCursor = Clip(cursorX, cursorY);
 			return true;
 		}
 

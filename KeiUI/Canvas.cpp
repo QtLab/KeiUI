@@ -36,7 +36,7 @@ namespace KeiUI{
 		return nullptr;
 	}
 
-	void Canvas::drawRect(Rect rect, float depth, float rotation){
+	void Canvas::drawRect(Rect rect, float depth, float rotation, Clip clip){
 
 		if(rect.getTexture() != L""){
 			D3DXIMAGE_INFO tmp;
@@ -56,7 +56,7 @@ namespace KeiUI{
 		finalMatrix = scaleMatrix * rotateMatrix * positionMatrix;
 		this->sprite->SetTransform(&finalMatrix);
 
-		this->sprite->Draw(this->tmpTexture, nullptr, nullptr, nullptr, rect.getColor().toD3DCOLOR());
+		this->sprite->Draw(this->tmpTexture, (clip.empty() ? nullptr : &(clip.toRECT())), nullptr, nullptr, rect.getColor().toD3DCOLOR());
 	}
 
 	void Canvas::nullTexture(string name, int width, int height){

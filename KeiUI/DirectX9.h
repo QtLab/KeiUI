@@ -30,7 +30,7 @@ namespace KeiUI{
 		DirectX9();
 		~DirectX9();
 
-		bool init(string name, Rect rect);
+		bool init(string name, Clip rect);
 
 	protected:
 		D3DMATERIAL9 initMaterial(D3DXCOLOR ambient, D3DXCOLOR diffuse, D3DXCOLOR specular, D3DXCOLOR emissive, float power);
