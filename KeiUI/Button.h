@@ -8,6 +8,7 @@ namespace KeiUI{
 	class Button : public UI{
 	private:
 		string defaultTexture, hoverTexture;
+		bool stretch;	// Stretch the display of texture
 
 	public:
 		Button(string name, Rect rect);
@@ -17,6 +18,7 @@ namespace KeiUI{
 		virtual void draw(Canvas* canvas);
 
 		void setTexture(string defaultTexture, string hoverTexture);
+		void setStretch(bool type);
 
 	private:
 		void moveOverEvent(Input* input);

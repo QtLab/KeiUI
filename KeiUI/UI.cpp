@@ -21,9 +21,8 @@ namespace KeiUI{
 
 	void UI::update(Input* input){
 
-		for(int i = 0; i < this->controlList.size(); i++){
-			this->controlList.get(i)->update(input);
-		}
+		// Update children
+		this->updateChildren(input);
 
 		// Sets the UI data for the current control
 		Rect parentRect = this->getParentRect();
@@ -45,13 +44,24 @@ namespace KeiUI{
 		canvas->drawRect(rect, index);
 
 		// Draw children
-		for(int i = 0; i < this->controlList.size(); i++){
-			this->controlList.get(i)->draw(canvas);
-		}
+		this->drawChildren(canvas);
 	}
 
 	void UI::recover(){
 
+	}
+
+	// Children
+	void UI::updateChildren(Input* input){
+		for(int i = 0; i < this->controlList.size(); i++){
+			this->controlList.get(i)->update(input);
+		}
+	}
+
+	void UI::drawChildren(Canvas* canvas){
+		for(int i = 0; i < this->controlList.size(); i++){
+			this->controlList.get(i)->draw(canvas);
+		}
 	}
 
 	void UI::add(UI* children){
@@ -136,11 +146,11 @@ namespace KeiUI{
 	}
 
 	void UI::setX(int x){
-		this->rect.setX(x);
+		this->rect.setX(x / Window::resolution);
 	}
 
 	void UI::setY(int y){
-		this->rect.setY(y);
+		this->rect.setY(y / Window::resolution);
 	}
 
 	void UI::setWidth(int width){

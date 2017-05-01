@@ -8,7 +8,8 @@ namespace KeiUI{
 
 	class Scene1 : public UI {
 	private:
-		Button* button;
+		Button* button1;
+		Button* button2;
 
 	public:
 		Scene1(string name, Rect rect);

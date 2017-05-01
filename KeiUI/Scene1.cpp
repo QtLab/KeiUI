@@ -4,18 +4,23 @@
 namespace KeiUI{
 
 	Scene1::Scene1(string name, Rect rect) : UI(name, rect) {
-		this->button = new Button(L"btn1", Rect(10, 10, 120, 120));
+		this->button1 = new Button(L"btn1", Rect(10, 10, 120, 120));
+		this->button2 = new Button(L"btn2", Rect(130, 130, 100, 35));
 	}
 
 	Scene1::~Scene1(){
-		Utility::Delete(this->button);
+		Utility::Delete(this->button2);
+		Utility::Delete(this->button1);
 	}
 
 	bool Scene1::load(){
-		this->button->setTexture(L"Resource/1.png", L"Resource/2.png");
-		this->button->setEvent(Event((UI*)this, (Function)(&Scene1::buttonClickEvent), Event::MouseLeftClickEvent));
+		this->button1->setTexture(L"Resource/1.png", L"Resource/2.png");
+		this->button1->setEvent(Event((UI*)this, (Function)(&Scene1::buttonClickEvent), Event::MouseLeftClickEvent));
+		this->add(button1);
 
-		this->add(button);
+		this->button2->setTexture(L"Resource/UI/button-default.png", L"Resource/UI/button-focus.png");
+		this->button2->setStretch(true);
+		this->add(button2);
 
 		this->setEvent(Event((UI*)this, (Function)(&Scene1::panelMoveEvent), Event::MouseLeftDragEvent));
 		this->setEvent(Event((UI*)this, (Function)(&Scene1::panelClickEvent), Event::MouseRightClickEvent));
@@ -57,7 +62,7 @@ namespace KeiUI{
 	}
 
 	void Scene1::buttonClickEvent(Input* input){
-		Window::messageBox(nullptr, L"Event Test", this->button->getName(), MB_ICONSTOP);
+		Window::messageBox(nullptr, L"Event Test", this->button1->getName(), MB_ICONSTOP);
 	}
 
 	void Scene1::panelClickEvent(Input* input){

@@ -9,9 +9,9 @@ namespace KeiUI{
 	RECT Clip::toRECT(){
 		RECT rect;
 		rect.left = this->getX();
-		rect.right = this->getWidth();
+		rect.right = this->getX() + this->getWidth();
 		rect.top = this->getY();
-		rect.bottom = this->getHeight();
+		rect.bottom = this->getY() + this->getHeight();
 
 		return rect;
 	}

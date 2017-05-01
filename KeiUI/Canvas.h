@@ -34,7 +34,8 @@ namespace KeiUI{
 		~Canvas();
 
 		BYTE* getPixel(string name, int* pitch);
-		void drawRect(Rect rect, float depth, float rotation = 0.0f, Clip clip = Clip());
+		void drawRect(Rect rect, float depth, Clip clip = Clip(), float rotation = 0.0f);
+		void drawStretch(Rect rect, float depth);
 
 	private:
 		void nullTexture(string name, int width, int height);

@@ -1,7 +1,7 @@
 #include "Button.h"
 
 namespace KeiUI{
-	Button::Button(string name, Rect rect) : UI(name, rect) {
+	Button::Button(string name, Rect rect) : UI(name, rect), stretch(false) {
 		this->setEvent(Event((UI*)this, (Function)(&Button::moveOverEvent), Event::MouseMoveOverEvent));
 		this->setEvent(Event((UI*)this, (Function)(&Button::moveOutEvent), Event::MouseMoveOutEvent));
 	}
@@ -15,7 +15,18 @@ namespace KeiUI{
 	}
 
 	void Button::draw(Canvas* canvas){
-		UI::draw(canvas);
+		// Draw self
+		Rect rect = this->getParentRect();
+
+		float index = 1.0f - this->getDepth() * 0.001f;
+		if(this->stretch){
+			canvas->drawStretch(rect, index);
+		}else{
+			canvas->drawRect(rect, index);
+		}
+	
+		// Draw children
+		this->drawChildren(canvas);
 	}
 
 	void Button::setTexture(string defaultTexture, string hoverTexture){
@@ -23,6 +34,10 @@ namespace KeiUI{
 		this->hoverTexture = hoverTexture;
 
 		UI::setTexture(this->defaultTexture);
+	}
+
+	void Button::setStretch(bool type){
+		this->stretch = type;
 	}
 
 	void Button::moveOverEvent(Input* input){

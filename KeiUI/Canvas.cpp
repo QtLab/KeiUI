@@ -36,15 +36,13 @@ namespace KeiUI{
 		return nullptr;
 	}
 
-	void Canvas::drawRect(Rect rect, float depth, float rotation, Clip clip){
+	void Canvas::drawRect(Rect rect, float depth, Clip clip, float rotation){
 
 		if(rect.getTexture() != L""){
-			D3DXIMAGE_INFO tmp;
-			this->loadTexture(rect.getTexture(), &tmp);
+			this->loadTexture(rect.getTexture());
 
 		}else{
 			string name = rect.toString();
-
 			this->nullTexture(name, rect.getWidth(), rect.getHeight());
 		}
 
@@ -57,6 +55,115 @@ namespace KeiUI{
 		this->sprite->SetTransform(&finalMatrix);
 
 		this->sprite->Draw(this->tmpTexture, (clip.empty() ? nullptr : &(clip.toRECT())), nullptr, nullptr, rect.getColor().toD3DCOLOR());
+	}
+
+	void Canvas::drawStretch(Rect rect, float depth){
+
+		D3DXIMAGE_INFO info;
+		this->loadTexture(rect.getTexture(), &info);
+
+		D3DXMATRIX positionMatrix, scaleMatrix, rotateMatrix, finalMatrix;
+		D3DXMatrixRotationZ(&rotateMatrix, 0.0f);
+
+		/*
+
+		An example of decomposition:
+
+		0|1|2	0,0 |15,0 |30,0
+		3|4|5	0,15|15,15|30,15
+		6|7|8	0,30|15,30|30,30
+
+		*/
+
+		float width = info.Width / 3;
+		float height = info.Height / 3;
+		Clip clip(0, 0, width, height);	// Set the corner 0 at the same time
+
+		for(int i = 0; i < 9; i++){
+			int x = 0, y = 0;
+			float scaleX = 1.0f, scaleY = 1.0f;
+
+			switch(i){
+			case 2:	// Four corners
+				
+				clip.setX(width * 2);
+				clip.setY(0);
+				
+				x = rect.getWidth() - width;
+				break;
+
+			case 6:
+				clip.setX(0);
+				clip.setY(height * 2);
+				
+				y = rect.getHeight() - height;
+				break;
+
+			case 8:
+				clip.setX(width * 2);
+				clip.setY(height * 2);
+				
+				x = rect.getWidth() - width;
+				y = rect.getHeight() - height;
+				break;
+
+			case 1:	// Up and down the two corners
+				clip.setX(width);
+				clip.setY(0);
+				
+				x = width;
+
+				scaleX = (rect.getWidth() - width * 2) / width;
+				break;
+
+			case 7:
+				clip.setX(width);
+				clip.setY(height * 2);
+				
+				x = width;
+				y = rect.getHeight() - height;
+
+				scaleX = (rect.getWidth() - width * 2) / width;
+				break;
+
+			case 3:	// Left and right the two corners
+				clip.setX(0);
+				clip.setY(height);
+
+				y = height;
+
+				scaleY = (rect.getHeight() - height * 2) / height;
+				break;
+
+			case 5:
+				clip.setX(width * 2);
+				clip.setY(height);
+				
+				x = rect.getWidth() - width;
+				y = height;
+
+				scaleY = (rect.getHeight() - height * 2) / height;
+				break;
+
+			case 4:	// Middle corner
+				clip.setX(width);
+				clip.setY(height);
+
+				x = width;
+				y = height;
+
+				scaleX = (rect.getWidth() - width * 2) / width;
+				scaleY = (rect.getHeight() - height * 2) / height;
+				break;
+			}
+
+			D3DXMatrixScaling(&scaleMatrix, scaleX * rect.getScale(), scaleY * rect.getScale(), 0.0f);
+			D3DXMatrixTranslation(&positionMatrix, rect.getX() + x * Window::resolution, rect.getY() + y * Window::resolution, depth);
+			finalMatrix = scaleMatrix * rotateMatrix * positionMatrix;
+			this->sprite->SetTransform(&finalMatrix);
+
+			this->sprite->Draw(this->tmpTexture, &(clip.toRECT()), nullptr, nullptr, rect.getColor().toD3DCOLOR());
+		}
 	}
 
 	void Canvas::nullTexture(string name, int width, int height){

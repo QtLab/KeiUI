@@ -32,6 +32,10 @@ namespace KeiUI{
 		virtual void draw(Canvas* canvas);
 		virtual void recover();
 
+		// Children
+		void updateChildren(Input* input);
+		void drawChildren(Canvas* canvas);
+
 		void add(UI* children);
 		void remove(string name);
 
