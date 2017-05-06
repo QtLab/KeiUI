@@ -3,7 +3,7 @@
 
 namespace KeiUI{
 
-	Form1::Form1(string name) : Form(name) {
+	Form1::Form1(string name, Window* window) : Form(name, window) {
 		this->panel = new Panel(L"panel", Rect(50, 50, 300, 300));
 		this->button1 = new Button(L"btn1", Rect(10, 10, 120, 120));
 		this->button2 = new Button(L"btn2", Rect(130, 130, 100, 35));
@@ -22,11 +22,12 @@ namespace KeiUI{
 
 		this->button1->setTexture(L"Resource/1.png", L"Resource/2.png");
 		this->button1->setText(L"");
-		this->button1->setEvent(Event((UI*)this, (Function)(&Form1::buttonClickEvent), Event::MouseLeftClickEvent));
+		this->button1->setEvent(Event((UI*)this, (Function)(&Form1::button1ClickEvent), Event::MouseLeftClickEvent));
 		this->panel->add(this->button1);
 
 		this->button2->setTexture(L"Resource/UI/button-default.png", L"Resource/UI/button-focus.png");
 		this->button2->setStretch(true);
+		this->button2->setEvent(Event((UI*)this, (Function)(&Form1::button2ClickEvent), Event::MouseRightClickEvent));
 		this->panel->add(this->button2);
 
 		this->panel->setEvent(Event((UI*)this, (Function)(&Form1::panelMoveEvent), Event::MouseLeftDragEvent));
@@ -68,8 +69,13 @@ namespace KeiUI{
 
 	}
 
-	void Form1::buttonClickEvent(Input* input){
+	void Form1::button1ClickEvent(Input* input){
 		Window::messageBox(nullptr, L"Event Test", this->button1->getName(), MB_ICONSTOP);
+	}
+
+	void Form1::button2ClickEvent(Input* input){
+		this->window->setMinimize();
+		Window::messageBox(nullptr, L"Event Test", this->button2->getName(), MB_ICONSTOP);
 	}
 
 	void Form1::panelClickEvent(Input* input){

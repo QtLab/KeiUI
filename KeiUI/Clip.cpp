@@ -2,6 +2,16 @@
 
 namespace KeiUI{
 
+	RECT operator*(const Clip& left, const float& right){
+		RECT rect;
+		rect.left = left.getX();
+		rect.right = left.getX() + left.getWidth() * right;
+		rect.top = left.getY();
+		rect.bottom = left.getY() + left.getHeight() * right;
+
+		return rect;
+	}
+
 	Clip::Clip(int x, int y, int width, int height): x(x), y(y), width(width), height(height){
 
 	}

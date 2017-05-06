@@ -41,6 +41,10 @@ namespace KeiUI{
 
 		virtual LRESULT events(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
+		void setClose();
+		void setMinimize();
+		void setMaximize();	// Unfulfilled
+
 	protected:
 		static LRESULT CALLBACK windowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 		void changeResolution(Resolution resolution);

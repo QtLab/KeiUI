@@ -4,7 +4,7 @@
 namespace KeiUI{
 
 	App::App(string name, HINSTANCE hInstance) : Window(name, hInstance){
-		this->form1 = new Form1(L"form1");
+
 	}
 
 	App::~App(){
@@ -12,6 +12,8 @@ namespace KeiUI{
 	}
 
 	bool App::load(){
+		this->form1 = new Form1(L"form1", this);
+
 		this->form1->setColor(Color(255, 219, 255));
 		this->bindForm(this->form1);
 

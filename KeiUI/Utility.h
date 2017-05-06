@@ -39,10 +39,8 @@ namespace KeiUI{
 
 		// Release the function of the resource
 		template<class T>
-		static void Release(T tmp)
-		{
-			if(tmp)
-			{
+		static void Release(T tmp){
+			if(tmp){
 				tmp->Release();
 				tmp = nullptr;
 			}
@@ -50,10 +48,8 @@ namespace KeiUI{
 
 		// Delete the function of the pointer
 		template<class T>
-		static void Delete(T tmp)
-		{
-			if(tmp)
-			{
+		static void Delete(T tmp){
+			if(tmp){
 				delete tmp;
 				tmp = nullptr;
 			}

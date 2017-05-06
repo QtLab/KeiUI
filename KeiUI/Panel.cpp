@@ -5,6 +5,10 @@ namespace KeiUI{
 
 	}
 
+	Panel::~Panel(){
+
+	}
+
 	void Panel::update(Input* input){
 		UI::update(input);
 	}

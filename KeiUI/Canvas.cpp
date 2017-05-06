@@ -183,7 +183,7 @@ namespace KeiUI{
 
 	void Canvas::drawFont(Font font){
 
-		this->newFont.Height = font.getSize();
+		this->newFont.Height = font.getSize() * Window::resolution;
 		this->newFont.Weight = font.getBold() ? 1000 : 0;
 
 		if(memcmp(&(this->newFont),&(this->oldFont),sizeof(D3DXFONT_DESC)) != 0){
@@ -196,7 +196,7 @@ namespace KeiUI{
 			this->oldFont = this->newFont;
 		}
 
-		RECT rect = font.getRect().toRECT();
+		RECT rect = font.getRect() * Window::resolution;
 		D3DCOLOR color = font.getColor().toD3DCOLOR();
 
 		this->font->DrawText(nullptr, font.getText().c_str(), -1, &rect, DT_WORDBREAK | DT_CENTER | DT_VCENTER, color);

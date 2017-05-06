@@ -2,12 +2,12 @@
 
 namespace KeiUI{
 
-	Rect operator*(const Rect& left,const float& right){
+	Rect operator*(const Rect& left, const float& right){
 		Rect rect(left.getX() * right, left.getY() * right, left.getWidth(), left.getHeight(), left.getTexture(), left.getColor(), left.getScale() * right);
 		return rect;
 	}
 
-	Rect operator+(const Rect& left,const Rect& right){	// example: parent + this->getRect();
+	Rect operator+(const Rect& left, const Rect& right){	// example: parent + this->getRect();
 		int x = left.getX() + right.getX();
 		int y = left.getY() + right.getY();
 
@@ -15,7 +15,7 @@ namespace KeiUI{
 		return rect;
 	}
 
-	bool operator!=(const Rect& left,const Rect& right){
+	bool operator!=(const Rect& left, const Rect& right){
 		bool x = left.getX() == right.getX();
 		bool y = left.getY() == right.getY();
 

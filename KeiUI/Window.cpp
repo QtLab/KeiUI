@@ -31,6 +31,10 @@ namespace KeiUI{
 
 	}
 
+	void Window::messageBox(HWND hWnd, string content, string title, UINT uType){
+		MessageBoxW(hWnd, content.c_str(), title.c_str(), uType);
+	}
+
 	bool Window::main(int width, int height){
 
 		// Save size
@@ -149,6 +153,18 @@ namespace KeiUI{
 		return 0;
 	}
 
+	void Window::setClose(){
+		PostQuitMessage(0);
+	}
+
+	void Window::setMinimize(){
+		PostMessage(this->hWnd, WM_SYSCOMMAND, SC_MINIMIZE, 0);
+	}
+
+	void Window::setMaximize(){
+		// Unfulfilled
+	}
+
 	LRESULT CALLBACK Window::windowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam){
 		if(message == WM_CREATE){
 			LPCREATESTRUCT pData = (LPCREATESTRUCT)lParam;
@@ -166,10 +182,6 @@ namespace KeiUI{
 				return DefWindowProc(hWnd, message, wParam, lParam);
 			}
 		}
-	}
-
-	void Window::messageBox(HWND hWnd, string content, string title, UINT uType){
-		MessageBoxW(hWnd, content.c_str(), title.c_str(), uType);
 	}
 
 	void Window::changeResolution(Resolution resolution){

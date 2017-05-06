@@ -14,7 +14,7 @@ namespace KeiUI{
 		Button* button2;
 
 	public:
-		Form1(string name);
+		Form1(string name, Window* window);
 		~Form1();
 
 		virtual bool load();
@@ -24,8 +24,9 @@ namespace KeiUI{
 		virtual void recover();
 
 	private:
+		void button1ClickEvent(Input* input);
+		void button2ClickEvent(Input* input);
 		void panelMoveEvent(Input* input);
-		void buttonClickEvent(Input* input);
 		void panelClickEvent(Input* input);
 
 	};

@@ -2,12 +2,16 @@
 #define _Form_H_
 
 #include "UI.h"
+#include "Window.h"
 
 namespace KeiUI{
 
 	class Form : public UI {
+	protected:
+		Window* window;
+
 	public:
-		Form(string name);
+		Form(string name, Window* window);
 		~Form();
 
 		virtual bool load() = 0;

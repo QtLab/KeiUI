@@ -8,6 +8,7 @@ namespace KeiUI{
 	class Panel : public UI{
 	public:
 		Panel(string name, Rect rect);
+		~Panel();
 
 		virtual void update(Input* input);
 		virtual void draw(Canvas* canvas);

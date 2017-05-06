@@ -8,9 +8,9 @@
 namespace KeiUI{
 
 	class Rect{
-		friend Rect operator*(const Rect& left,const float& right);
-		friend Rect operator+(const Rect& left,const Rect& right);
-		friend bool operator!=(const Rect& left,const Rect& right);
+		friend Rect operator*(const Rect& left, const float& right);
+		friend Rect operator+(const Rect& left, const Rect& right);
+		friend bool operator!=(const Rect& left, const Rect& right);
 
 	private:
 		Clip clip;

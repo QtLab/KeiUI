@@ -6,6 +6,8 @@
 namespace KeiUI{
 
 	class Clip{
+		friend RECT operator*(const Clip& left, const float& right);	// Used to stretching the resolution when drawing the font
+
 	private:
 		int x, y;
 		int width, height;

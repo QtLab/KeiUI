@@ -10,9 +10,7 @@ namespace KeiUI{
 	}
 
 	UI::~UI(){
-		for(int i = 0; i < this->controlList.size(); i++){
-			Utility::Delete(this->controlList.get(i));
-		}
+
 	}
 
 	bool UI::load(){

@@ -2,7 +2,7 @@
 
 namespace KeiUI{
 
-	Form::Form(string name) : UI(name, Rect()) {
+	Form::Form(string name, Window* window) : UI(name, Rect()), window(window) {
 
 	}
 
