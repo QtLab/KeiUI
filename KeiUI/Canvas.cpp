@@ -3,12 +3,27 @@
 
 namespace KeiUI{
 	Canvas::Canvas(IDirect3DDevice9* device, ID3DXSprite* sprite)
-		: device(device), sprite(sprite), tmpTexture(nullptr), textureList(Array<string, TextureInfo>()) 
+		: device(device), sprite(sprite), tmpTexture(nullptr), textureList(Array<string, TextureInfo>()), font(nullptr) 
 	{
+		ZeroMemory(&(this->oldFont), sizeof(D3DXFONT_DESC));
+		ZeroMemory(&(this->newFont), sizeof(D3DXFONT_DESC));
+
+		newFont.Height = 14;	//×ÖÌåµÄ¸ß¶È
+		newFont.Width = 0; // ²»ÌîÓÉ¸ß¶È¾ö¶¨À­Éì¿í¶È
+		newFont.Weight = 0;	// ¼Ó´Ö·¶Î§£º0£¨¹â»¬) 1000£¨´ÖÌå£©
+		newFont.MipLevels = D3DX_DEFAULT;
+		newFont.Italic = false;	//Ğ±Ìå
+		newFont.CharSet = DEFAULT_CHARSET;
+		newFont.OutputPrecision = 0;
+		newFont.Quality = 0;
+		newFont.PitchAndFamily = 0;          
+		//lstrcpy(fontDesc.FaceName, L"Î¢ÈíÑÅºÚ");	//×ÖÌå
 
 	}
 
 	Canvas::~Canvas(){
+		Utility::Release(this->font);
+
 		for(int i = 0; i < this->textureList.size(); i++){
 			Utility::Release(this->textureList.last().texture);
 			this->textureList.remove();
@@ -166,6 +181,27 @@ namespace KeiUI{
 		}
 	}
 
+	void Canvas::drawFont(Font font){
+
+		this->newFont.Height = font.getSize();
+		this->newFont.Weight = font.getBold() ? 1000 : 0;
+
+		if(memcmp(&(this->newFont),&(this->oldFont),sizeof(D3DXFONT_DESC)) != 0){
+			Utility::Release(this->font);
+
+			if(FAILED(D3DXCreateFontIndirect(device, &(this->newFont), &(this->font)))){
+				return;
+			}
+
+			this->oldFont = this->newFont;
+		}
+
+		RECT rect = font.getRect().toRECT();
+		D3DCOLOR color = font.getColor().toD3DCOLOR();
+
+		this->font->DrawText(nullptr, font.getText().c_str(), -1, &rect, DT_WORDBREAK | DT_CENTER | DT_VCENTER, color);
+	}
+
 	void Canvas::nullTexture(string name, int width, int height){
 
 		if(!(this->textureList.exist(name))){
@@ -191,7 +227,7 @@ namespace KeiUI{
 
 				this->tmpTexture->UnlockRect(0);
 
-				// è®°å½•èµ„æº
+				// ¼ÇÂ¼×ÊÔ´
 				D3DXIMAGE_INFO info;
 				info.Width = width;
 				info.Height = height;
@@ -210,7 +246,7 @@ namespace KeiUI{
 	void Canvas::loadTexture(string source, D3DXIMAGE_INFO* info){
 
 		if(!(this->textureList.exist(source))){
-			// æ‰“å¼€æ–‡ä»¶
+			// ´ò¿ªÎÄ¼ş
 			HANDLE file = CreateFile(
 				source.c_str(), GENERIC_READ, 0, NULL,
 				OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL
@@ -220,7 +256,7 @@ namespace KeiUI{
 				return;
 			}
 
-			// è·å–æ–‡ä»¶çš„å¤§å°
+			// »ñÈ¡ÎÄ¼şµÄ´óĞ¡
 			DWORD imageSize = GetFileSize(file, nullptr);
 			BYTE* imageBuff = new BYTE[imageSize];
 			if (!imageBuff) {
@@ -228,14 +264,14 @@ namespace KeiUI{
 				return;
 			}
 
-			// è¯»å…¥æ–‡ä»¶æ•°æ®
+			// ¶ÁÈëÎÄ¼şÊı¾İ
 			DWORD buffSize;
 			ReadFile(file, imageBuff, imageSize, &buffSize, nullptr);
 			CloseHandle(file);
 
-			// æ•°æ®è§£å¯†
+			// Êı¾İ½âÃÜ
 
-			// è·å–å›¾ç‰‡çš„å¤§å°
+			// »ñÈ¡Í¼Æ¬µÄ´óĞ¡
 			D3DXIMAGE_INFO* tmpInfo = nullptr;
 			if(info != nullptr){
 				tmpInfo = info;
@@ -248,7 +284,7 @@ namespace KeiUI{
 				return;
 			}
 
-			// è¯»å…¥å†…å­˜ä¸­çš„å›¾ç‰‡
+			// ¶ÁÈëÄÚ´æÖĞµÄÍ¼Æ¬
 			this->tmpTexture = nullptr;
 
 			HRESULT hr = D3DXCreateTextureFromFileInMemoryEx(
@@ -262,15 +298,15 @@ namespace KeiUI{
 				return;
 			}
 
-			// å¦‚æœéœ€è¦è¿”å›åˆ™å¡«å……å†…å®¹
+			// Èç¹ûĞèÒª·µ»ØÔòÌî³äÄÚÈİ
 			if(info != nullptr){
 				*info = *tmpInfo;
 			}
 
-			// è®°å½•èµ„æº
+			// ¼ÇÂ¼×ÊÔ´
 			this->textureList.add(source, TextureInfo(this->tmpTexture, *tmpInfo));
 
-			// é‡Šæ”¾èµ„æº
+			// ÊÍ·Å×ÊÔ´
 			tmpInfo = nullptr;
 			delete tmpInfo;
 			Utility::Delete(imageBuff);

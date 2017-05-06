@@ -2,6 +2,7 @@
 #define _Button_H_
 
 #include "UI.h"
+#include "Font.h"
 
 namespace KeiUI{
 
@@ -9,6 +10,8 @@ namespace KeiUI{
 	private:
 		string defaultTexture, hoverTexture;
 		bool stretch;	// Stretch the display of texture
+		
+		Font text;
 
 	public:
 		Button(string name, Rect rect);
@@ -19,6 +22,7 @@ namespace KeiUI{
 
 		void setTexture(string defaultTexture, string hoverTexture);
 		void setStretch(bool type);
+		void setText(string text);
 
 	private:
 		void moveOverEvent(Input* input);

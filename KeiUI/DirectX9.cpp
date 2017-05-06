@@ -3,7 +3,7 @@
 
 namespace KeiUI{
 
-	DirectX9::DirectX9() : hWnd(nullptr), device(nullptr), sprite(nullptr){
+	DirectX9::DirectX9() : hWnd(nullptr), device(nullptr), sprite(nullptr) {
 
 	}
 

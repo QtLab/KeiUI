@@ -5,6 +5,7 @@
 #include "Array.h"
 #include "Rect.h"
 #include "Color.h"
+#include "Font.h"
 
 namespace KeiUI{
 
@@ -29,6 +30,10 @@ namespace KeiUI{
 		IDirect3DTexture9* tmpTexture;
 		Array<string, TextureInfo> textureList;
 
+		D3DXFONT_DESC newFont;
+		D3DXFONT_DESC oldFont;
+		ID3DXFont* font;
+
 	public:
 		Canvas(IDirect3DDevice9* device, ID3DXSprite* sprite);
 		~Canvas();
@@ -36,6 +41,7 @@ namespace KeiUI{
 		BYTE* getPixel(string name, int* pitch);
 		void drawRect(Rect rect, float depth, Clip clip = Clip(), float rotation = 0.0f);
 		void drawStretch(Rect rect, float depth);
+		void drawFont(Font font);
 
 	private:
 		void nullTexture(string name, int width, int height);

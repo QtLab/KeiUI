@@ -78,6 +78,7 @@
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Clip.cpp" />
+    <ClCompile Include="Font.cpp" />
     <ClCompile Include="Form.cpp" />
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="Form1.cpp" />
@@ -98,6 +99,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Clip.h" />
     <ClInclude Include="Event.h" />
+    <ClInclude Include="Font.h" />
     <ClInclude Include="Form.h" />
     <ClInclude Include="Panel.h" />
     <ClInclude Include="Form1.h" />

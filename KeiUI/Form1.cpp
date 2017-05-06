@@ -21,6 +21,7 @@ namespace KeiUI{
 		this->add(this->panel);
 
 		this->button1->setTexture(L"Resource/1.png", L"Resource/2.png");
+		this->button1->setText(L"");
 		this->button1->setEvent(Event((UI*)this, (Function)(&Form1::buttonClickEvent), Event::MouseLeftClickEvent));
 		this->panel->add(this->button1);
 
