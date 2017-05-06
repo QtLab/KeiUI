@@ -181,7 +181,7 @@ namespace KeiUI{
 				BYTE* pixels= (BYTE*)lockedRect.pBits;
 				for(int i = 0; i < height; i++){
 					for(int j = 0; j < width; j++){
-						int index = i * 4 + j * lockedRect.Pitch;
+						int index = j * 4 + i * lockedRect.Pitch;
 						pixels[index] = 255;
 						pixels[index + 1] = 255;
 						pixels[index + 2] = 255;

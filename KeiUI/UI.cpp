@@ -31,10 +31,6 @@ namespace KeiUI{
 		this->callEvent(input);	// Event
 	}
 
-	void UI::render(){
-
-	}
-
 	void UI::draw(Canvas* canvas){
 	
 		// Draw self
@@ -45,10 +41,6 @@ namespace KeiUI{
 
 		// Draw children
 		this->drawChildren(canvas);
-	}
-
-	void UI::recover(){
-
 	}
 
 	// Children

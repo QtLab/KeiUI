@@ -55,11 +55,11 @@ namespace KeiUI{
 	bool Input::mouseMoveOut(){
 
 		// Need to set the UI data before using
-
+		
 		if(this->leaveArea()){
 			return true;
 		}
-
+		
 		return false;
 	}
 

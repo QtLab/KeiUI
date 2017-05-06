@@ -78,7 +78,9 @@
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Clip.cpp" />
-    <ClCompile Include="Scene1.cpp" />
+    <ClCompile Include="Form.cpp" />
+    <ClCompile Include="Panel.cpp" />
+    <ClCompile Include="Form1.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="TimeLock.cpp" />
     <ClCompile Include="UI.cpp" />
@@ -96,7 +98,9 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Clip.h" />
     <ClInclude Include="Event.h" />
-    <ClInclude Include="Scene1.h" />
+    <ClInclude Include="Form.h" />
+    <ClInclude Include="Panel.h" />
+    <ClInclude Include="Form1.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="TimeLock.h" />
     <ClInclude Include="UI.h" />

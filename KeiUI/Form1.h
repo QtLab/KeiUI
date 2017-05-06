@@ -1,19 +1,21 @@
-#ifndef _Scene1_H_
-#define _Scene1_H_
+#ifndef _Form1_H_
+#define _Form1_H_
 
-#include "UI.h"
+#include "Form.h"
+#include "Panel.h"
 #include "Button.h"
 
 namespace KeiUI{
 
-	class Scene1 : public UI {
+	class Form1 : public Form {
 	private:
+		Panel* panel;
 		Button* button1;
 		Button* button2;
 
 	public:
-		Scene1(string name, Rect rect);
-		~Scene1();
+		Form1(string name);
+		~Form1();
 
 		virtual bool load();
 		virtual void update(Input* input);
@@ -30,4 +32,4 @@ namespace KeiUI{
 
 };
 
-#endif _Scene1_H_
+#endif _Form1_H_

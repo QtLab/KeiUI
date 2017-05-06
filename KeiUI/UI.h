@@ -28,9 +28,7 @@ namespace KeiUI{
 
 		virtual bool load();
 		virtual void update(Input* input);
-		virtual void render();
 		virtual void draw(Canvas* canvas);
-		virtual void recover();
 
 		// Children
 		void updateChildren(Input* input);

@@ -2,13 +2,13 @@
 #define _App_H_
 
 #include "Window.h"
-#include "Scene1.h"
+#include "Form1.h"
 
 namespace KeiUI{
 
 	class App : public Window{
 	private:
-		UI* panel;
+		Form1* form1;
 
 	public:
 		App(string name, HINSTANCE hInstance = 0);
@@ -19,6 +19,10 @@ namespace KeiUI{
 		virtual void render();
 		virtual void draw(Canvas* canvas);
 		virtual void recover();
+
+	protected:
+		void bindForm(UI* form);
+
 	};
 
 };
