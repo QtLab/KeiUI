@@ -7,7 +7,7 @@ namespace KeiUI{
 
 	class Panel : public UI{
 	public:
-		Panel(string name, Rect rect);
+		Panel(string name, Clip rect);
 		~Panel();
 
 		virtual void update(Input* input);

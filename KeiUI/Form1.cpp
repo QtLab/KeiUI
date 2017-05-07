@@ -4,9 +4,9 @@
 namespace KeiUI{
 
 	Form1::Form1(string name, Window* window) : Form(name, window) {
-		this->panel = new Panel(L"panel", Rect(50, 50, 300, 300));
-		this->button1 = new Button(L"btn1", Rect(10, 10, 120, 120));
-		this->button2 = new Button(L"btn2", Rect(130, 130, 100, 35));
+		this->panel = new Panel(L"panel", Clip(50, 50, 300, 300));
+		this->button1 = new Button(L"btn1", Clip(10, 10, 120, 120));
+		this->button2 = new Button(L"btn2", Clip(130, 130, 100, 35));
 	}
 
 	Form1::~Form1(){
@@ -16,12 +16,11 @@ namespace KeiUI{
 	}
 
 	bool Form1::load(){
-
 		this->panel->setColor(Color(67, 238, 156));
 		this->add(this->panel);
 
 		this->button1->setTexture(L"Resource/1.png", L"Resource/2.png");
-		this->button1->setText(L"");
+		//this->button1->setText(L"");
 		this->button1->setEvent(Event((UI*)this, (Function)(&Form1::button1ClickEvent), Event::MouseLeftClickEvent));
 		this->panel->add(this->button1);
 
@@ -33,7 +32,7 @@ namespace KeiUI{
 		this->panel->setEvent(Event((UI*)this, (Function)(&Form1::panelMoveEvent), Event::MouseLeftDragEvent));
 		this->panel->setEvent(Event((UI*)this, (Function)(&Form1::panelClickEvent), Event::MouseRightClickEvent));
 
-		return true;
+		return UI::loadChildren();
 	}
 
 	void Form1::update(Input* input){

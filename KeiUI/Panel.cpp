@@ -1,7 +1,7 @@
 #include "Panel.h"
 
 namespace KeiUI{
-	Panel::Panel(string name, Rect rect) : UI(name, rect){
+	Panel::Panel(string name, Clip rect) : UI(name, rect){
 
 	}
 

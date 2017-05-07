@@ -3,9 +3,10 @@
 
 namespace KeiUI{
 	
-	UI::UI(string name, Rect rect) 
-		: name(name), depth(0), rect(rect), controlParent(nullptr), controlList(Array<int, UI*>()), eventList(Array<int, Event>())
+	UI::UI(string name, Clip rect) 
+		: name(name), depth(0), rect(Rect()), controlParent(nullptr), controlList(Array<int, UI*>()), eventList(Array<int, Event>())
 	{
+		this->rect.setClip(rect);
 		this->rotation = 1.0f;
 	}
 
@@ -14,7 +15,7 @@ namespace KeiUI{
 	}
 
 	bool UI::load(){
-		return true;
+		return this->loadChildren();
 	}
 
 	void UI::update(Input* input){
@@ -42,6 +43,16 @@ namespace KeiUI{
 	}
 
 	// Children
+	bool UI::loadChildren(){
+		for(int i = 0; i < this->controlList.size(); i++){
+			if(!(this->controlList.get(i)->load())){
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	void UI::updateChildren(Input* input){
 		for(int i = 0; i < this->controlList.size(); i++){
 			this->controlList.get(i)->update(input);

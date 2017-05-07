@@ -47,6 +47,14 @@ namespace KeiUI{
 
 	}
 
+	void Rect::setClip(Clip clip){
+		this->clip = clip;
+	}
+
+	Clip Rect::getClip(){
+		return this->clip;
+	}
+
 	// get
 	int Rect::getX() const{
 		return this->clip.getX();
@@ -122,10 +130,6 @@ namespace KeiUI{
 		tmp.append(Utility::toString(this->getScale()));
 
 		return tmp;
-	}
-
-	Clip Rect::toClip(){
-		return this->clip;
 	}
 
 	bool Rect::empty(){

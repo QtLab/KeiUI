@@ -2,7 +2,7 @@
 #define _Button_H_
 
 #include "UI.h"
-#include "Font.h"
+#include "Label.h"
 
 namespace KeiUI{
 
@@ -11,12 +11,13 @@ namespace KeiUI{
 		string defaultTexture, hoverTexture;
 		bool stretch;	// Stretch the display of texture
 		
-		Font text;
+		Label* text;
 
 	public:
-		Button(string name, Rect rect);
+		Button(string name, Clip rect);
 		~Button();
 
+		virtual bool load();
 		virtual void update(Input* input);
 		virtual void draw(Canvas* canvas);
 

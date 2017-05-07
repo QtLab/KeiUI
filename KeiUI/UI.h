@@ -23,7 +23,7 @@ namespace KeiUI{
 		Array<int, Event> eventList;	// Event
 
 	public:
-		UI(string name, Rect rect);
+		UI(string name, Clip rect);
 		~UI();
 
 		virtual bool load();
@@ -31,6 +31,7 @@ namespace KeiUI{
 		virtual void draw(Canvas* canvas);
 
 		// Children
+		bool loadChildren();
 		void updateChildren(Input* input);
 		void drawChildren(Canvas* canvas);
 

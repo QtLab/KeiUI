@@ -1,13 +1,21 @@
 #include "Button.h"
 
 namespace KeiUI{
-	Button::Button(string name, Rect rect) : UI(name, rect), stretch(false), text(Font(name, rect.toClip())) {
+	Button::Button(string name, Clip rect) : UI(name, rect), stretch(false) {
 		this->setEvent(Event((UI*)this, (Function)(&Button::moveOverEvent), Event::MouseMoveOverEvent));
 		this->setEvent(Event((UI*)this, (Function)(&Button::moveOutEvent), Event::MouseMoveOutEvent));
+
+		this->text = new Label(name, Clip(0, 0, rect.getWidth(), rect.getHeight()));
 	}
 
 	Button::~Button(){
+		Utility::Delete(this->text);
+	}
 
+	bool Button::load(){
+		this->add(this->text);
+
+		return UI::loadChildren();;
 	}
 
 	void Button::update(Input* input){
@@ -25,10 +33,11 @@ namespace KeiUI{
 			canvas->drawRect(rect, index);
 		}
 
+		/*
 		if(this->text.getText() != L""){
 			this->text.setRect(rect.toClip());
 			canvas->drawFont(this->text);
-		}
+		}*/
 
 		// Draw children
 		this->drawChildren(canvas);
@@ -46,7 +55,7 @@ namespace KeiUI{
 	}
 
 	void Button::setText(string text){
-		this->text.setText(text);
+		this->text->setText(text);
 	}
 
 	void Button::moveOverEvent(Input* input){

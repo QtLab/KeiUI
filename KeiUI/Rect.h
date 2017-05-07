@@ -23,6 +23,9 @@ namespace KeiUI{
 		Rect(Rect &rect);
 		~Rect();
 
+		void setClip(Clip clip);
+		Clip getClip();
+
 		int getX() const;
 		int getY() const;
 		int getWidth() const;
@@ -42,7 +45,6 @@ namespace KeiUI{
 		void setScale(float scale);
 
 		string toString();
-		Clip toClip();
 
 		bool empty();
 
