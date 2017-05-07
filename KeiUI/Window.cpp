@@ -146,6 +146,9 @@ namespace KeiUI{
 			Window::isMinimize = false;
 			break;
 
+		case WM_IME_CHAR:
+			Input::inputTmp = (wchar_t)wParam;
+			break;
 		default:
 			return DefWindowProc(hWnd, message, wParam, lParam);
 		}

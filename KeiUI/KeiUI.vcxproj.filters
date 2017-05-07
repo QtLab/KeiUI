@@ -99,6 +99,9 @@
     <ClCompile Include="Label.cpp">
       <Filter>源文件\Control</Filter>
     </ClCompile>
+    <ClCompile Include="Textbox.cpp">
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utility.h">
@@ -156,6 +159,9 @@
       <Filter>头文件\Base</Filter>
     </ClInclude>
     <ClInclude Include="Label.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Textbox.h">
       <Filter>头文件\Control</Filter>
     </ClInclude>
   </ItemGroup>

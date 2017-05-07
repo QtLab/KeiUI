@@ -84,6 +84,7 @@
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="Form1.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Textbox.cpp" />
     <ClCompile Include="TimeLock.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Canvas.cpp" />
@@ -106,6 +107,7 @@
     <ClInclude Include="Panel.h" />
     <ClInclude Include="Form1.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Textbox.h" />
     <ClInclude Include="TimeLock.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Canvas.h" />

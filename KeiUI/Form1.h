@@ -4,6 +4,7 @@
 #include "Form.h"
 #include "Panel.h"
 #include "Button.h"
+#include "Textbox.h"
 
 namespace KeiUI{
 
@@ -12,6 +13,8 @@ namespace KeiUI{
 		Panel* panel;
 		Button* button1;
 		Button* button2;
+
+		Textbox* textbox;
 
 	public:
 		Form1(string name, Window* window);
@@ -28,6 +31,8 @@ namespace KeiUI{
 		void button2ClickEvent(Input* input);
 		void panelMoveEvent(Input* input);
 		void panelClickEvent(Input* input);
+
+		void textboxClickEvent(Input* input);
 
 	};
 

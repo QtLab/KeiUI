@@ -17,6 +17,8 @@ namespace KeiUI{
 		Rect rect;	// Coordinate information
 		float rotation;
 
+		bool focus;
+
 		UI* controlParent;
 		Array<int, UI*> controlList;
 
@@ -52,6 +54,9 @@ namespace KeiUI{
 		int getScale();
 
 		float getRotation();
+
+		bool getFocur();
+
 		UI* getParent();
 
 		// Set
@@ -68,6 +73,9 @@ namespace KeiUI{
 		void setScale(float scale);
 
 		void setRotation(float rotation);
+
+		void setFocur(bool focur);
+
 		void setParent(UI* parent);
 
 		void setEvent(Event event);	// Event

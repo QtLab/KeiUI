@@ -50,6 +50,8 @@ namespace KeiUI{
 			Z = 0x5A
 		};
 
+		static string inputTmp;
+
 	private:
 		Clip rect;
 		Canvas* canvas;
@@ -63,9 +65,14 @@ namespace KeiUI{
 		TimeLock timeLock;
 
 	public:
+		bool isInput;
+
+	public:
 		Input(Clip rect, Canvas* canvas);
 
-		bool Input::keyDown(int vKey);
+		string inputText();
+
+		bool keyDown(int vKey);
 		bool mouseLeftDown();
 		bool mouseRightDown();
 		bool mouseMoveOver();

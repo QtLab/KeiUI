@@ -4,8 +4,21 @@
 
 namespace KeiUI{
 
-	Input::Input(Clip rect, Canvas* canvas) : rect(rect), canvas(canvas), timeLock(10){
+	string Input::inputTmp = L"";
 
+	Input::Input(Clip rect, Canvas* canvas) : rect(rect), canvas(canvas), timeLock(10), isInput(false){
+
+	}
+
+	string Input::inputText(){
+		if(Input::inputTmp != L""){
+			string tmp = Input::inputTmp;
+			Input::inputTmp = L"";
+
+			return tmp;
+		}
+
+		return L"";
 	}
 
 	bool Input::keyDown(int vKey){

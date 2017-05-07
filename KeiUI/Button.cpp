@@ -33,12 +33,6 @@ namespace KeiUI{
 			canvas->drawRect(rect, index);
 		}
 
-		/*
-		if(this->text.getText() != L""){
-			this->text.setRect(rect.toClip());
-			canvas->drawFont(this->text);
-		}*/
-
 		// Draw children
 		this->drawChildren(canvas);
 	}

@@ -8,6 +8,7 @@ namespace KeiUI{
 	{
 		this->rect.setClip(rect);
 		this->rotation = 1.0f;
+		this->focus = false;
 	}
 
 	UI::~UI(){
@@ -129,6 +130,10 @@ namespace KeiUI{
 		return this->rotation;
 	}
 
+	bool UI::getFocur(){
+		return this->focus;
+	}
+
 	UI* UI::getParent(){
 		return this->controlParent;
 	}
@@ -176,6 +181,11 @@ namespace KeiUI{
 
 	void UI::setRotation(float rotation){
 		this->rotation = rotation;
+	}
+
+	void UI::setFocur(bool focur){
+		Input::inputTmp = L"";
+		this->focus = focur;
 	}
 
 	void UI::setParent(UI* parent){

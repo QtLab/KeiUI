@@ -7,9 +7,13 @@ namespace KeiUI{
 		this->panel = new Panel(L"panel", Clip(50, 50, 300, 300));
 		this->button1 = new Button(L"btn1", Clip(10, 10, 120, 120));
 		this->button2 = new Button(L"btn2", Clip(130, 130, 100, 35));
+
+		this->textbox = new Textbox(L"textbox", Clip(20, 15, 80, 20));
 	}
 
 	Form1::~Form1(){
+		Utility::Delete(this->textbox);
+
 		Utility::Delete(this->button2);
 		Utility::Delete(this->button1);
 		Utility::Delete(this->panel);
@@ -17,10 +21,11 @@ namespace KeiUI{
 
 	bool Form1::load(){
 		this->panel->setColor(Color(67, 238, 156));
+		this->panel->setFocur(true);
 		this->add(this->panel);
 
 		this->button1->setTexture(L"Resource/1.png", L"Resource/2.png");
-		//this->button1->setText(L"");
+		this->button1->setText(L"");
 		this->button1->setEvent(Event((UI*)this, (Function)(&Form1::button1ClickEvent), Event::MouseLeftClickEvent));
 		this->panel->add(this->button1);
 
@@ -32,19 +37,27 @@ namespace KeiUI{
 		this->panel->setEvent(Event((UI*)this, (Function)(&Form1::panelMoveEvent), Event::MouseLeftDragEvent));
 		this->panel->setEvent(Event((UI*)this, (Function)(&Form1::panelClickEvent), Event::MouseRightClickEvent));
 
+		this->textbox->setColor(Color(255, 0, 255));
+		this->textbox->setEvent(Event((UI*)this, (Function)(&Form1::textboxClickEvent), Event::MouseLeftClickEvent));
+		this->add(this->textbox);
+
 		return UI::loadChildren();
 	}
 
 	void Form1::update(Input* input){
 		UI::update(input);
 
-		if(input->keyDown(Input::Key::A)){
-			this->panel->setX(this->panel->getX() - 10);
+
+		if(this->panel->getFocur()){
+			if(input->keyDown(Input::Key::A)){
+				this->panel->setX(this->panel->getX() - 10);
+			}
+
+			if(input->keyDown(Input::Key::D)){
+				this->panel->setX(this->panel->getX() + 10);
+			}
 		}
 
-		if(input->keyDown(Input::Key::D)){
-			this->panel->setX(this->panel->getX() + 10);
-		}
 	}
 
 	void Form1::render(){
@@ -65,7 +78,6 @@ namespace KeiUI{
 
 		this->panel->setX(this->panel->getX() + x);
 		this->panel->setY(this->panel->getY() + y);
-
 	}
 
 	void Form1::button1ClickEvent(Input* input){
@@ -78,7 +90,14 @@ namespace KeiUI{
 	}
 
 	void Form1::panelClickEvent(Input* input){
-		Window::messageBox(nullptr, L"Event Test", this->panel->getName(), MB_ICONSTOP);
+		this->textbox->setColor(Color(255, 0, 255));
+		this->textbox->setFocur(false);
+		this->panel->setFocur(true);
 	}
 
+	void Form1::textboxClickEvent(Input* input){
+		this->textbox->setColor(Color(100, 0, 255));
+		this->textbox->setFocur(true);
+		this->panel->setFocur(false);
+	}
 };

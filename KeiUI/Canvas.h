@@ -41,7 +41,7 @@ namespace KeiUI{
 		BYTE* getPixel(string name, int* pitch);
 		void drawRect(Rect rect, float depth, Clip clip = Clip(), float rotation = 0.0f);
 		void drawStretch(Rect rect, float depth);
-		void drawFont(Font font);
+		void drawFont(Font font, int type);
 
 	private:
 		void nullTexture(string name, int width, int height);

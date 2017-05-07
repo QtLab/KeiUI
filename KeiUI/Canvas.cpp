@@ -181,7 +181,7 @@ namespace KeiUI{
 		}
 	}
 
-	void Canvas::drawFont(Font font){
+	void Canvas::drawFont(Font font, int type){
 
 		this->newFont.Height = font.getSize() * Window::resolution;
 		this->newFont.Weight = font.getBold() ? 1000 : 0;
@@ -199,7 +199,7 @@ namespace KeiUI{
 		RECT rect = font.getRect() * Window::resolution;
 		D3DCOLOR color = font.getColor().toD3DCOLOR();
 
-		this->font->DrawText(nullptr, font.getText().c_str(), -1, &rect, DT_WORDBREAK | DT_CENTER | DT_VCENTER, color);
+		this->font->DrawText(nullptr, font.getText().c_str(), -1, &rect, type, color);
 	}
 
 	void Canvas::nullTexture(string name, int width, int height){
